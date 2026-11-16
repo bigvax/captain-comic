@@ -1,4 +1,4 @@
-<p align="center"><img src="doc/images/icon.png" width="48" height="48" alt="Captain Comic"></p>
+<p align="center"><img src="doc/images/icon.png" width="64" height="64" alt="Captain Comic"></p>
 <h1 align="center">Adventures of Captain Comic (Linux/Windows)</h1>
 
 Кроссплатформенный порт культовой DOS-аркады **«Приключения Капитана Комика»** (*Adventures of Captain Comic*, Rev 5, Майкл Денио, 1988), написанный в ноябре 2026 г. Максимом Живлюком, без использования сторонних игровых движков.
