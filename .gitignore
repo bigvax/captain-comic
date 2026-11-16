@@ -11,9 +11,10 @@
 /data/scores.dat
 /data/keys.cfg
 /src/assets_data.h
-/deps/linux/build_img/
-/deps/linux/build_ttf/
-/deps/win32/sysroot/
+/deps/linux/build_img/*
+!/deps/linux/build_img/libSDL2_image.a
+/deps/linux/build_ttf/*
+!/deps/linux/build_ttf/libSDL2_ttf.a
 __pycache__/
 *.py[cod]
 *.bak

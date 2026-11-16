@@ -215,10 +215,10 @@ sudo apt install gcc make pkg-config python3 libsdl2-dev libsdl2-ttf-dev libsdl2
 
 &nbsp;
 
-Готовый Windows SDK не хранится в Git. Перед Windows-сборкой поместите
-полный SDK в `deps/win32/sysroot/`; можно скопировать этот каталог из
-архива проекта `captain-comic-0.5.63-reviewed.7z`, где он сохранён.
-Для обычной Linux-сборки SDK не нужен.
+Готовые статические библиотеки SDL2_image и SDL2_ttf для Linux находятся
+в `deps/linux/build_img/` и `deps/linux/build_ttf/`. Windows SDK включён
+в репозиторий в `deps/win32/sysroot/`; для кросс-сборки установите MinGW-w64.
+Для обычной Linux-сборки используются системные SDL2-библиотеки.
 
 ### Цели `Makefile`
 
