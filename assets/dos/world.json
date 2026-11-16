@@ -1,0 +1,1245 @@
+{
+  "revision": 5,
+  "source_exe_sha256": "c3060caa17d9f0a0f129929861cc21921cc9367d66cae02adb24455c80a9ffb7",
+  "table_offset": 65008,
+  "record_bytes": 208,
+  "coordinate_unit": 8,
+  "areas": {
+    "lake": [
+      {
+        "item": {
+          "kind": "cola",
+          "sprite": 8,
+          "x": 896,
+          "y": 96
+        },
+        "left": 1,
+        "right": null,
+        "doors": [
+          {
+            "x": 944,
+            "y": 80,
+            "area": "forest",
+            "scene": 2
+          },
+          {
+            "x": 1984,
+            "y": 112,
+            "area": "shed",
+            "scene": 0
+          }
+        ],
+        "enemies": [
+          {
+            "shape": "FB",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 127,
+            "delayed": false
+          },
+          {
+            "shape": "FB",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 127,
+            "delayed": false
+          },
+          {
+            "shape": "BUG",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": false
+          },
+          {
+            "shape": "BUG",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": false
+          }
+        ]
+      },
+      {
+        "item": {
+          "kind": "shield",
+          "sprite": 14,
+          "x": 1424,
+          "y": 80
+        },
+        "left": 2,
+        "right": 0,
+        "doors": [],
+        "enemies": [
+          {
+            "shape": "FB",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 1,
+            "delayed": false
+          },
+          {
+            "shape": "FB",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 1,
+            "delayed": false
+          },
+          {
+            "shape": "BUG",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": false
+          },
+          {
+            "shape": "BUG",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": false
+          }
+        ]
+      },
+      {
+        "item": {
+          "kind": "cola",
+          "sprite": 8,
+          "x": 992,
+          "y": 32
+        },
+        "left": null,
+        "right": 1,
+        "doors": [
+          {
+            "x": 80,
+            "y": 112,
+            "area": "cave",
+            "scene": 0
+          },
+          {
+            "x": 880,
+            "y": 48,
+            "area": "space",
+            "scene": 0
+          },
+          {
+            "x": 592,
+            "y": 64,
+            "area": "base",
+            "scene": 1
+          }
+        ],
+        "enemies": [
+          {
+            "shape": "FB",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 1,
+            "delayed": false
+          },
+          {
+            "shape": "FB",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 1,
+            "delayed": false
+          },
+          {
+            "shape": "BUG",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": false
+          },
+          {
+            "shape": "BUG",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": false
+          }
+        ]
+      }
+    ],
+    "forest": [
+      {
+        "item": {
+          "kind": "cola",
+          "sprite": 8,
+          "x": 96,
+          "y": 112
+        },
+        "left": null,
+        "right": 1,
+        "doors": [
+          {
+            "x": 96,
+            "y": 96,
+            "area": "castle",
+            "scene": 0
+          }
+        ],
+        "enemies": [
+          {
+            "shape": "BIRD",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 1,
+            "delayed": false
+          },
+          {
+            "shape": "BIRD",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 1,
+            "delayed": false
+          },
+          {
+            "shape": "BIRD",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 127,
+            "delayed": false
+          },
+          {
+            "shape": "BIRD",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 127,
+            "delayed": false
+          }
+        ]
+      },
+      {
+        "item": {
+          "kind": "shield",
+          "sprite": 14,
+          "x": 944,
+          "y": 80
+        },
+        "left": 0,
+        "right": 2,
+        "doors": [],
+        "enemies": [
+          {
+            "shape": "BIRD",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 1,
+            "delayed": false
+          },
+          {
+            "shape": "BIRD",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 1,
+            "delayed": false
+          },
+          {
+            "shape": "BIRD",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 127,
+            "delayed": false
+          },
+          {
+            "shape": "BIRD2",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 5,
+            "delayed": false
+          }
+        ]
+      },
+      {
+        "item": {
+          "kind": "key",
+          "sprite": 1,
+          "x": 1280,
+          "y": 16
+        },
+        "left": 1,
+        "right": null,
+        "doors": [
+          {
+            "x": 1904,
+            "y": 96,
+            "area": "lake",
+            "scene": 0
+          },
+          {
+            "x": 1280,
+            "y": 112,
+            "area": "comp",
+            "scene": 2
+          }
+        ],
+        "enemies": [
+          {
+            "shape": "BIRD",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 1,
+            "delayed": false
+          },
+          {
+            "shape": "BIRD2",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 5,
+            "delayed": false
+          },
+          {
+            "shape": "BIRD",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 1,
+            "delayed": false
+          },
+          {
+            "shape": "BIRD2",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 5,
+            "delayed": false
+          }
+        ]
+      }
+    ],
+    "space": [
+      {
+        "item": {
+          "kind": "cola",
+          "sprite": 8,
+          "x": 80,
+          "y": 128
+        },
+        "left": null,
+        "right": 1,
+        "doors": [
+          {
+            "x": 16,
+            "y": 96,
+            "area": "lake",
+            "scene": 2
+          }
+        ],
+        "enemies": [
+          {
+            "shape": "ROCK",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 1,
+            "delayed": false
+          },
+          {
+            "shape": "ROCK",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 1,
+            "delayed": false
+          },
+          {
+            "shape": "ROCK",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 1,
+            "delayed": false
+          },
+          {
+            "shape": "ROCK",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 1,
+            "delayed": false
+          }
+        ]
+      },
+      {
+        "item": {
+          "kind": "shield",
+          "sprite": 14,
+          "x": 912,
+          "y": 64
+        },
+        "left": 0,
+        "right": 2,
+        "doors": [],
+        "enemies": [
+          {
+            "shape": "ROCK",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 1,
+            "delayed": false
+          },
+          {
+            "shape": "ROCK",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 1,
+            "delayed": false
+          },
+          {
+            "shape": "ROCK",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 1,
+            "delayed": false
+          },
+          {
+            "shape": "SAUCER",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 1,
+            "delayed": false
+          }
+        ]
+      },
+      {
+        "item": {
+          "kind": "gems",
+          "sprite": 5,
+          "x": 1584,
+          "y": 48
+        },
+        "left": 1,
+        "right": null,
+        "doors": [
+          {
+            "x": 1824,
+            "y": 96,
+            "area": "base",
+            "scene": 0
+          }
+        ],
+        "enemies": [
+          {
+            "shape": "ROCK",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 1,
+            "delayed": false
+          },
+          {
+            "shape": "ROCK",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 1,
+            "delayed": false
+          },
+          {
+            "shape": "SAUCER",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 1,
+            "delayed": false
+          },
+          {
+            "shape": "SAUCER",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 1,
+            "delayed": true
+          }
+        ]
+      }
+    ],
+    "base": [
+      {
+        "item": {
+          "kind": "shield",
+          "sprite": 14,
+          "x": 2016,
+          "y": 32
+        },
+        "left": 1,
+        "right": 2,
+        "doors": [
+          {
+            "x": 1920,
+            "y": 112,
+            "area": "base",
+            "scene": 2
+          },
+          {
+            "x": 912,
+            "y": 112,
+            "area": "base",
+            "scene": 1
+          },
+          {
+            "x": 1104,
+            "y": 64,
+            "area": "space",
+            "scene": 2
+          }
+        ],
+        "enemies": [
+          {
+            "shape": "BUG",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": false
+          },
+          {
+            "shape": "BUG",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": false
+          },
+          {
+            "shape": "BUG",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": false
+          },
+          {
+            "shape": "GLOBE",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 3,
+            "delayed": false
+          }
+        ]
+      },
+      {
+        "item": {
+          "kind": "corkscrew",
+          "sprite": 0,
+          "x": 0,
+          "y": 128
+        },
+        "left": null,
+        "right": 0,
+        "doors": [
+          {
+            "x": 0,
+            "y": 48,
+            "area": "lake",
+            "scene": 2
+          },
+          {
+            "x": 896,
+            "y": 112,
+            "area": "base",
+            "scene": 0
+          },
+          {
+            "x": 0,
+            "y": 0,
+            "area": "base",
+            "scene": 2
+          }
+        ],
+        "enemies": [
+          {
+            "shape": "BUG",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": false
+          },
+          {
+            "shape": "BUG",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": false
+          },
+          {
+            "shape": "BUG",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": false
+          },
+          {
+            "shape": "GLOBE",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 3,
+            "delayed": false
+          }
+        ]
+      },
+      {
+        "item": {
+          "kind": "boots",
+          "sprite": 2,
+          "x": 1840,
+          "y": 128
+        },
+        "left": 0,
+        "right": null,
+        "doors": [
+          {
+            "x": 288,
+            "y": 16,
+            "area": "base",
+            "scene": 0
+          },
+          {
+            "x": 1744,
+            "y": 112,
+            "area": "base",
+            "scene": 1
+          }
+        ],
+        "enemies": [
+          {
+            "shape": "BUG",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": false
+          },
+          {
+            "shape": "BUG",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": false
+          },
+          {
+            "shape": "GLOBE",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 3,
+            "delayed": false
+          },
+          {
+            "shape": "GLOBE",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 3,
+            "delayed": true
+          }
+        ]
+      }
+    ],
+    "cave": [
+      {
+        "item": {
+          "kind": "shield",
+          "sprite": 14,
+          "x": 328,
+          "y": 48
+        },
+        "left": null,
+        "right": 1,
+        "doors": [
+          {
+            "x": 64,
+            "y": 96,
+            "area": "lake",
+            "scene": 2
+          },
+          {
+            "x": 320,
+            "y": 32,
+            "area": "cave",
+            "scene": 1
+          },
+          {
+            "x": 1232,
+            "y": 16,
+            "area": "cave",
+            "scene": 2
+          }
+        ],
+        "enemies": [
+          {
+            "shape": "FROG",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": false
+          },
+          {
+            "shape": "FROG",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": false
+          },
+          {
+            "shape": "FROG",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": true
+          },
+          {
+            "shape": "BEE",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 4,
+            "delayed": false
+          }
+        ]
+      },
+      {
+        "item": {
+          "kind": "gold",
+          "sprite": 7,
+          "x": 1824,
+          "y": 32
+        },
+        "left": 0,
+        "right": 2,
+        "doors": [
+          {
+            "x": 1888,
+            "y": 112,
+            "area": "cave",
+            "scene": 0
+          }
+        ],
+        "enemies": [
+          {
+            "shape": "FROG",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": false
+          },
+          {
+            "shape": "FROG",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": true
+          },
+          {
+            "shape": "BEE",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 4,
+            "delayed": false
+          },
+          {
+            "shape": "BEE",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 4,
+            "delayed": false
+          }
+        ]
+      },
+      {
+        "item": {
+          "kind": "wand",
+          "sprite": 4,
+          "x": 512,
+          "y": 80
+        },
+        "left": 1,
+        "right": null,
+        "doors": [
+          {
+            "x": 1888,
+            "y": 112,
+            "area": "cave",
+            "scene": 0
+          }
+        ],
+        "enemies": [
+          {
+            "shape": "FROG",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": false
+          },
+          {
+            "shape": "FROG",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": true
+          },
+          {
+            "shape": "BEE",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 4,
+            "delayed": false
+          },
+          {
+            "shape": "BEE",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 4,
+            "delayed": false
+          }
+        ]
+      }
+    ],
+    "shed": [
+      {
+        "item": {
+          "kind": "shield",
+          "sprite": 14,
+          "x": 1296,
+          "y": 96
+        },
+        "left": null,
+        "right": 1,
+        "doors": [
+          {
+            "x": 32,
+            "y": 96,
+            "area": "lake",
+            "scene": 0
+          }
+        ],
+        "enemies": [
+          {
+            "shape": "BIRD",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 1,
+            "delayed": false
+          },
+          {
+            "shape": "BIRD",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 1,
+            "delayed": false
+          },
+          {
+            "shape": "BEE",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 4,
+            "delayed": false
+          },
+          {
+            "shape": "BALL",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": false
+          }
+        ]
+      },
+      {
+        "item": {
+          "kind": "cola",
+          "sprite": 8,
+          "x": 2000,
+          "y": 32
+        },
+        "left": 0,
+        "right": null,
+        "doors": [
+          {
+            "x": 1920,
+            "y": 32,
+            "area": "shed",
+            "scene": 2
+          }
+        ],
+        "enemies": [
+          {
+            "shape": "BIRD",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 1,
+            "delayed": false
+          },
+          {
+            "shape": "BEE",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 4,
+            "delayed": false
+          },
+          {
+            "shape": "BALL",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": false
+          },
+          {
+            "shape": "BALL",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": false
+          }
+        ]
+      },
+      {
+        "item": {
+          "kind": "shield",
+          "sprite": 14,
+          "x": 1968,
+          "y": 80
+        },
+        "left": null,
+        "right": null,
+        "doors": [
+          {
+            "x": 32,
+            "y": 112,
+            "area": "shed",
+            "scene": 1
+          },
+          {
+            "x": 1936,
+            "y": 64,
+            "area": "comp",
+            "scene": 0
+          }
+        ],
+        "enemies": [
+          {
+            "shape": "BIRD",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 1,
+            "delayed": true
+          },
+          {
+            "shape": "BEE",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 4,
+            "delayed": false
+          },
+          {
+            "shape": "BALL",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": false
+          },
+          {
+            "shape": "BALL",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": true
+          }
+        ]
+      }
+    ],
+    "castle": [
+      {
+        "item": {
+          "kind": "crown",
+          "sprite": 6,
+          "x": 1952,
+          "y": 16
+        },
+        "left": null,
+        "right": null,
+        "doors": [
+          {
+            "x": 1968,
+            "y": 112,
+            "area": "forest",
+            "scene": 0
+          },
+          {
+            "x": 1824,
+            "y": 32,
+            "area": "castle",
+            "scene": 2
+          },
+          {
+            "x": 64,
+            "y": 64,
+            "area": "castle",
+            "scene": 1
+          }
+        ],
+        "enemies": [
+          {
+            "shape": "BIRD",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 1,
+            "delayed": true
+          },
+          {
+            "shape": "BALL",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": false
+          },
+          {
+            "shape": "BALL",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": true
+          },
+          {
+            "shape": "BEE",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 4,
+            "delayed": false
+          }
+        ]
+      },
+      {
+        "item": {
+          "kind": "shield",
+          "sprite": 14,
+          "x": 528,
+          "y": 112
+        },
+        "left": null,
+        "right": null,
+        "doors": [
+          {
+            "x": 64,
+            "y": 112,
+            "area": "castle",
+            "scene": 0
+          },
+          {
+            "x": 64,
+            "y": 16,
+            "area": "castle",
+            "scene": 2
+          }
+        ],
+        "enemies": [
+          {
+            "shape": "BIRD",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 1,
+            "delayed": true
+          },
+          {
+            "shape": "BALL",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": false
+          },
+          {
+            "shape": "BALL",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": true
+          },
+          {
+            "shape": "CUBE",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 5,
+            "delayed": false
+          }
+        ]
+      },
+      {
+        "item": {
+          "kind": "shield",
+          "sprite": 14,
+          "x": 352,
+          "y": 64
+        },
+        "left": null,
+        "right": null,
+        "doors": [
+          {
+            "x": 64,
+            "y": 64,
+            "area": "castle",
+            "scene": 1
+          },
+          {
+            "x": 1968,
+            "y": 32,
+            "area": "castle",
+            "scene": 0
+          }
+        ],
+        "enemies": [
+          {
+            "shape": "BALL",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 2,
+            "delayed": false
+          },
+          {
+            "shape": "CUBE",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 5,
+            "delayed": true
+          },
+          {
+            "shape": "BEE",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 4,
+            "delayed": false
+          },
+          {
+            "shape": "BEE",
+            "frames_per_direction": 3,
+            "directions": 2,
+            "behavior": 4,
+            "delayed": true
+          }
+        ]
+      }
+    ],
+    "comp": [
+      {
+        "item": {
+          "kind": "shield",
+          "sprite": 14,
+          "x": 1120,
+          "y": 16
+        },
+        "left": null,
+        "right": 1,
+        "doors": [
+          {
+            "x": 48,
+            "y": 64,
+            "area": "shed",
+            "scene": 2
+          }
+        ],
+        "enemies": [
+          {
+            "shape": "STAR1",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 1,
+            "delayed": false
+          },
+          {
+            "shape": "STAR2",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 1,
+            "delayed": false
+          },
+          {
+            "shape": "STAR3",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 1,
+            "delayed": false
+          },
+          {
+            "shape": "STAR1",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 127,
+            "delayed": false
+          }
+        ]
+      },
+      {
+        "item": {
+          "kind": "shield",
+          "sprite": 14,
+          "x": 560,
+          "y": 80
+        },
+        "left": 0,
+        "right": 2,
+        "doors": [],
+        "enemies": [
+          {
+            "shape": "STAR1",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 1,
+            "delayed": true
+          },
+          {
+            "shape": "STAR2",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 1,
+            "delayed": true
+          },
+          {
+            "shape": "STAR3",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 1,
+            "delayed": true
+          },
+          {
+            "shape": "STAR1",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 127,
+            "delayed": false
+          }
+        ]
+      },
+      {
+        "item": {
+          "kind": "lantern",
+          "sprite": 3,
+          "x": 1328,
+          "y": 16
+        },
+        "left": 1,
+        "right": null,
+        "doors": [
+          {
+            "x": 1952,
+            "y": 112,
+            "area": "forest",
+            "scene": 2
+          }
+        ],
+        "enemies": [
+          {
+            "shape": "STAR1",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 1,
+            "delayed": true
+          },
+          {
+            "shape": "STAR2",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 1,
+            "delayed": true
+          },
+          {
+            "shape": "STAR3",
+            "frames_per_direction": 3,
+            "directions": 1,
+            "behavior": 1,
+            "delayed": true
+          },
+          {
+            "shape": "STAR1",
+            "frames_per_direction": 4,
+            "directions": 1,
+            "behavior": 127,
+            "delayed": false
+          }
+        ]
+      }
+    ]
+  }
+}
