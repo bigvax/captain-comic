@@ -262,11 +262,24 @@ make linux
 
 Игра собирается из того же кода C11 / SDL2 с помощью Emscripten. Проверена сборка с Emscripten 7.0.0. Требуются активированное окружение Emsdk, `make` и Python 3; системные SDL2 для этой цели не нужны.
 
+Установите Emsdk один раз (официальная [инструкция Emscripten](https://emscripten.org/docs/getting_started/downloads.html)):
+
 ```bash
-source /путь/к/emsdk/emsdk_env.sh
+git clone https://github.com/emscripten-core/emsdk.git "$HOME/emsdk"
+"$HOME/emsdk/emsdk" install 7.0.0
+"$HOME/emsdk/emsdk" activate 7.0.0
+```
+
+Затем в терминале с каталогом проекта подключите окружение и соберите игру:
+
+```bash
+source "$HOME/emsdk/emsdk_env.sh"
+emcc --version
 make web
 make web-serve
 ```
+
+Команду `source` нужно выполнять в каждом новом терминале. Если Emsdk установлен в другом каталоге, укажите его путь. Ошибка `emcc: Нет такого файла или каталога` означает, что компилятор не установлен либо не добавлен в `PATH`. Обычный GCC собирает Linux-версию; для `make web` нужен Emscripten.
 
 Откройте `http://127.0.0.1:8080` и нажмите **Играть**. Результат сборки находится в `build/web/`: содержимое каталога можно разместить на статическом HTTP/HTTPS-хостинге. Открытие `index.html` через `file://` не поддерживается.
 
