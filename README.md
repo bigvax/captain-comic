@@ -146,7 +146,7 @@
 В `world.json` задано **11 щитов в 8 локациях**. В Ангаре, Комплексе и Замке — по два, в остальных пяти локациях — по одному.
 
 <p>
-  <img src="doc/images/items/shield.png" width="32" alt="Shield" align="left">
+  <img src="doc/images/items/shield.png" width="32" height="32" alt="Shield" align="left" vspace="6">
   &nbsp;&nbsp;<strong>Щит</strong> восстанавливает энергию до полной шкалы.<br>
   &nbsp;&nbsp;Если шкала уже полная, подбор щита даёт дополнительную жизнь (с учётом игрового предела жизней).
 </p>
