@@ -48,7 +48,7 @@ WIN_SYSTEM_LIBS := -mwindows -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinm
 	-limm32 -lole32 -loleaut32 -lshell32 -lsetupapi -lversion -luuid -lrpcrt4 -lusp10
 WIN_STATIC_LIBS = -Wl,-Bstatic -lmingw32 -lSDL2main -lSDL2_image -lSDL2_ttf -lSDL2 \
 	-Wl,-Bdynamic $(WIN_SYSTEM_LIBS)
-.PHONY: all linux linux-standalone static win win-standalone debug dist dist-7z web web-serve check-web \
+.PHONY: all linux linux-standalone static win win-standalone debug dist dist-7z web web-serve web-docs check-web \
 	check check-input check-resources check-ending clean FORCE
 all: linux linux-standalone win win-standalone
 WEB_FLAGS := -O2 -D_POSIX_C_SOURCE=200809L
@@ -69,7 +69,9 @@ check-web:
 build/web-support/miniz.o: src/miniz.c src/miniz.h Makefile | check-web
 	@mkdir -p $(@D)
 	$(EMCC) $(COMMON_FLAGS) -O2 $(CPPFLAGS) $(CFLAGS) -w -c $< -o $@
-web: check-web data/assets.pak build/web-support/miniz.o
+web-docs:
+	$(PYTHON) tools/pack_web_docs.py $(WEB_OUTPUT)
+web: check-web data/assets.pak build/web-support/miniz.o web-docs
 	@mkdir -p $(WEB_OUTPUT)
 	$(EMCC) $(COMMON_FLAGS) $(WARNINGS) $(WEB_FLAGS) $(CPPFLAGS) $(CFLAGS) \
 		$(addprefix src/,$(addsuffix .c,$(filter-out miniz,$(SOURCES)))) build/web-support/miniz.o \
