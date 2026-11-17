@@ -1,4 +1,4 @@
-<p align="center"><img src="doc/images/icon.png" width="64" height="64" alt="Captain Comic"></p>
+<p align="center"><img src="doc/images/icon.png" alt="Captain Comic" width="64" height="64"></p>
 
 <h1 align="center">Adventures of Captain Comic (Linux/Windows)</h1>
 
