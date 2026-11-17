@@ -290,7 +290,7 @@ bool game_enter_area(Game *g, int area) {
 }
 bool game_teleport(Game *g) {
 	if (!g->wand) {
-		say(g, "Сначала найдите жезл телепортации.");
+		say(g, "Сначала найдите стек телепортации.");
 		return false;
 	}
 	if (!g->grounded || g->teleport_cooldown > 0 || g->teleport_time > 0 || g->death_time > 0 ||
@@ -383,7 +383,7 @@ void game_collect(Game *g, int kind) {
 		return;
 	case WAND:
 		g->wand = true;
-		say(g, "Телепортационная палочка! Клавиши — в справке F1.");
+		say(g, "Стек телепортации! Клавиши — в справке F1.");
 		return;
 	case GEMS:
 		g->treasures |= 1u;
