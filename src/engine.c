@@ -1163,7 +1163,7 @@ int game_key(Game *g, SDL_Scancode key, bool repeat) {
 			return 0;
 		}
 		if (g->settings_page == 3) {
-			(void)score_edit_key(g, key, false);
+			(void)score_edit_key(g, key, KMOD_NONE);
 			return 0;
 		}
 		if (g->settings_page == 2) {
@@ -1275,4 +1275,3 @@ int game_key(Game *g, SDL_Scancode key, bool repeat) {
 		g->debug = !g->debug;
 	return 0;
 }
-

@@ -163,8 +163,8 @@ void score_edit_text(Game *g, const char *text) {
 	save_edited_scores(g);
 }
 
-bool score_edit_key(Game *g, SDL_Scancode key, bool fast) {
-	int step = fast ? 10000 : 1000;
+bool score_edit_key(Game *g, SDL_Scancode key, SDL_Keymod modifiers) {
+	int step = (modifiers & KMOD_CTRL) ? 100000 : (modifiers & KMOD_SHIFT) ? 10000 : 1000;
 	ScoreTable *table = &g->r->scores;
 	int row = g->settings_row;
 	if (row < 0) row = 0;
@@ -172,7 +172,12 @@ bool score_edit_key(Game *g, SDL_Scancode key, bool fast) {
 	g->settings_row = row;
 	if (key == SDL_SCANCODE_UP) { if (row > 0) g->settings_row--; return true; }
 	if (key == SDL_SCANCODE_DOWN) { if (row < SCORE_COUNT - 1) g->settings_row++; return true; }
-	if (key == SDL_SCANCODE_INSERT && table->count < SCORE_COUNT) {
+	if (key == SDL_SCANCODE_INSERT) {
+		if (table->count >= SCORE_COUNT) {
+			snprintf(g->message, sizeof g->message, "Таблица заполнена. Сначала удалите запись (Del).");
+			g->message_time = 3;
+			return true;
+		}
 		g->settings_row = table->count++;
 		table->entries[g->settings_row] = (ScoreEntry){.score = 1000, .name = "НОВЫЙ"};
 	} else if (row < table->count) {

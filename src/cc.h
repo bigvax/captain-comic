@@ -274,7 +274,7 @@ void game_setting_change(Game *g, int field, int delta);
 int game_key(Game *g, SDL_Scancode key, bool repeat);
 TTF_Font *resources_open_font(int size);
 void resources_shutdown(Resources *r);
-bool score_edit_key(Game *g, SDL_Scancode key, bool fast);
+bool score_edit_key(Game *g, SDL_Scancode key, SDL_Keymod modifiers);
 int game_key_event(Game *g, const SDL_KeyboardEvent *event);
 void score_edit_text(Game *g, const char *text);
 bool game_text_input(const Game *g);

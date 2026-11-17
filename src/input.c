@@ -165,10 +165,16 @@ bool bindings_save(const KeyBindings *b, const char *path) {
 int game_key_event(Game *g, const SDL_KeyboardEvent *event) {
 	SDL_Scancode key = event->keysym.scancode;
 	bool final_animation = g->ending_stage > ENDING_NONE && g->ending_stage < ENDING_PAGE;
-	if (!event->repeat && (event->keysym.mod & KMOD_SHIFT) &&
-		g->location_menu && g->settings_page == 3 && !g->help_open && !g->scores_open &&
-		!final_animation && (key == SDL_SCANCODE_LEFT || key == SDL_SCANCODE_RIGHT)) {
-		(void)score_edit_key(g, key, true);
+	bool score_editor = g->location_menu && g->settings_page == 3 &&
+		!g->help_open && !g->scores_open && !final_animation;
+	/* Keypad navigation keeps its physical scancode when Num Lock is off. */
+	if (score_editor && !(event->keysym.mod & KMOD_NUM)) {
+		if (key == SDL_SCANCODE_KP_0) key = SDL_SCANCODE_INSERT;
+		else if (key == SDL_SCANCODE_KP_PERIOD) key = SDL_SCANCODE_DELETE;
+	}
+	if (score_editor && !event->repeat && (event->keysym.mod & (KMOD_SHIFT | KMOD_CTRL)) &&
+		(key == SDL_SCANCODE_LEFT || key == SDL_SCANCODE_RIGHT)) {
+		(void)score_edit_key(g, key, (SDL_Keymod)event->keysym.mod);
 		return 0;
 	}
 	return game_key(g, key, event->repeat != 0);
