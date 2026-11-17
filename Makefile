@@ -7,6 +7,7 @@ WINDRES ?= x86_64-w64-mingw32-windres
 DLLTOOL ?= x86_64-w64-mingw32-dlltool
 OBJDUMP_WIN ?= x86_64-w64-mingw32-objdump
 PYTHON ?= python3
+EMCC ?= emcc
 PKG_CONFIG ?= pkg-config
 WIN_SYSROOT ?= deps/win32/sysroot
 WIN_FMT ?= zip
@@ -47,9 +48,26 @@ WIN_SYSTEM_LIBS := -mwindows -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinm
 	-limm32 -lole32 -loleaut32 -lshell32 -lsetupapi -lversion -luuid -lrpcrt4 -lusp10
 WIN_STATIC_LIBS = -Wl,-Bstatic -lmingw32 -lSDL2main -lSDL2_image -lSDL2_ttf -lSDL2 \
 	-Wl,-Bdynamic $(WIN_SYSTEM_LIBS)
-.PHONY: all linux linux-standalone static win win-standalone debug dist dist-7z \
+.PHONY: all linux linux-standalone static win win-standalone debug dist dist-7z web web-serve \
 	check check-input check-resources check-ending clean FORCE
 all: linux linux-standalone win win-standalone
+WEB_FLAGS := -O2 -D_POSIX_C_SOURCE=200809L -sUSE_SDL=2 -sUSE_SDL_TTF=2 -sUSE_SDL_IMAGE=2 \
+	-sSDL2_IMAGE_FORMATS='["png","jpg"]' -sALLOW_MEMORY_GROWTH=1 \
+	-sMODULARIZE=1 -sEXPORT_NAME=createCaptainComic -sINVOKE_RUN=0 \
+	-sEXPORTED_RUNTIME_METHODS='["callMain","FS"]' -sENVIRONMENT=web \
+	-sFORCE_FILESYSTEM=1 -sEXIT_RUNTIME=0
+WEB_OUTPUT := build/web
+web: data/assets.pak
+	@mkdir -p $(WEB_OUTPUT)
+	$(EMCC) $(COMMON_FLAGS) $(WARNINGS) $(WEB_FLAGS) $(CPPFLAGS) $(CFLAGS) \
+		$(addprefix src/,$(addsuffix .c,$(SOURCES))) \
+		--preload-file data/assets.pak@/data/assets.pak $(LDFLAGS) -lm $(LDLIBS) \
+		-o $(WEB_OUTPUT)/captain-comic.js
+	cp web/index.html web/app.js web/style.css $(WEB_OUTPUT)/
+	cp assets/intro/title.png $(WEB_OUTPUT)/cover.png
+	cp assets/icons/icon.png $(WEB_OUTPUT)/icon.png
+web-serve: web
+	$(PYTHON) -m http.server 8080 --bind 127.0.0.1 --directory $(WEB_OUTPUT)
 linux: captain-comic
 linux-standalone: captain-comic-standalone
 static: captain-comic-static
@@ -140,3 +158,4 @@ clean:
 	rm -f data/assets.pak src/assets_data.h data/*.dll
 # Зависимости заголовков, включая sound_data.h и встроенный пакет ресурсов.
 -include $(wildcard build/*/*.d build/*.d)
+

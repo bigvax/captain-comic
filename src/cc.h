@@ -113,6 +113,9 @@ typedef struct {
 #define SCORE_COUNT 10
 #define SCORE_NAME_CHARS 16
 #define SCORE_NAME_BYTES 65
+#ifdef __EMSCRIPTEN__
+void web_restore_saves(void);
+#endif
 typedef struct {
 	int score;
 	char name[SCORE_NAME_BYTES];
@@ -283,3 +286,4 @@ int self_test(Resources *r);
 bool save_screenshot(Resources *r, const char *path);
 
 #endif
+

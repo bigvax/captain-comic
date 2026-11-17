@@ -1,4 +1,7 @@
 #include "cc.h"
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
 #ifdef _WIN32
 #include <direct.h>
 #include <windows.h>
@@ -12,6 +15,10 @@
 #define PLATFORM_NAME "Windows"
 #define EXE_NAME "captain-comic.exe"
 #define PREF_ORG "CaptainComicWin"
+#elif defined(__EMSCRIPTEN__)
+#define PLATFORM_NAME "Web"
+#define EXE_NAME "captain-comic"
+#define PREF_ORG "CaptainComicWeb"
 #else
 #define PLATFORM_NAME "Linux"
 #define EXE_NAME "captain-comic"
@@ -28,6 +35,11 @@
 
 static void resolve_save_paths(Resources *r) {
 	if (!r) return;
+#ifdef __EMSCRIPTEN__
+	web_restore_saves();
+	snprintf(r->config_path, sizeof r->config_path, "/persist/keys.cfg");
+	snprintf(r->score_path, sizeof r->score_path, "/persist/scores.dat");
+#else
 	char *base = SDL_GetBasePath();
 	bool portable_ok = false;
 	if (base) {
@@ -57,6 +69,7 @@ static void resolve_save_paths(Resources *r) {
 			SDL_free(pref);
 		}
 	}
+#endif
 }
 
 static void usage(void) {
@@ -98,6 +111,118 @@ static void configure_dll_path(void) {
 	SetDllDirectoryW(path);
 }
 #endif
+
+typedef struct {
+	Resources *r;
+	Game game;
+	bool headless, running, fullscreen, text_input, pending_event;
+	int count, frames, exit_status;
+	const char *screenshot;
+	SDL_Event event;
+	Uint8 pressed[SDL_NUM_SCANCODES];
+	double accumulator, frequency;
+	Uint64 previous;
+} Application;
+
+#ifdef __EMSCRIPTEN__
+static Application *web_app;
+EM_JS(void, web_notify_stopped, (void), {
+	if (Module['ccStopped']) Module['ccStopped']();
+});
+EMSCRIPTEN_KEEPALIVE void cc_web_action(int action) {
+	if (!web_app || !web_app->running) return;
+	static const SDL_Scancode keys[] = {SDL_SCANCODE_F1, SDL_SCANCODE_F2,
+		SDL_SCANCODE_F4, SDL_SCANCODE_F5, SDL_SCANCODE_ESCAPE};
+	if (action < 0 || action >= (int)(sizeof keys / sizeof keys[0])) return;
+	(void)game_key(&web_app->game, keys[action], false);
+	sync_text_input(&web_app->game, &web_app->text_input);
+}
+EMSCRIPTEN_KEEPALIVE void cc_web_suspend(void) {
+	if (!web_app || !web_app->running) return;
+	Game *g = &web_app->game;
+	if (!g->title && !g->over && !g->won) g->paused = true;
+	g->fire_pending = 0;
+	memset(web_app->pressed, 0, sizeof web_app->pressed);
+	web_app->accumulator = 0;
+	web_app->previous = SDL_GetPerformanceCounter();
+}
+#endif
+
+static void application_frame(void *userdata) {
+	Application *app = userdata;
+	Game *game = &app->game;
+
+	Uint64 now = SDL_GetPerformanceCounter();
+	double elapsed = app->headless ? 1. / 60. : (double)(now - app->previous) / app->frequency;
+	app->previous = now; if (elapsed > .1) elapsed = .1;
+	sync_text_input(game, &app->text_input);
+
+	while (app->pending_event || SDL_PollEvent(&app->event)) {
+		app->pending_event = false;
+		if (app->event.type == SDL_QUIT) app->running = false;
+		else if (app->event.type == SDL_WINDOWEVENT && app->event.window.event == SDL_WINDOWEVENT_FOCUS_LOST && !game->title) {
+			game->paused = true; memset(app->pressed, 0, sizeof app->pressed);
+		} else if (app->event.type == SDL_TEXTINPUT) {
+			if (game->location_menu && game->settings_page == 3)
+				score_edit_text(game, app->event.text.text);
+			else
+				game_score_text(game, app->event.text.text);
+		} else if (app->event.type == SDL_KEYDOWN) {
+			if (!app->event.key.repeat && app->event.key.keysym.scancode > SDL_SCANCODE_UNKNOWN && app->event.key.keysym.scancode < SDL_NUM_SCANCODES)
+				app->pressed[app->event.key.keysym.scancode] = 1;
+			int action = game_key_event(game, &app->event.key);
+			sync_text_input(game, &app->text_input);
+			if (action == 1) { app->running = false; break; }
+			if (action == 2) {
+				app->fullscreen = !app->fullscreen;
+				if (SDL_SetWindowFullscreen(app->r->window, app->fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0) != 0) {
+					fail_message("Ошибка полноэкранного режима: %s", SDL_GetError()); app->fullscreen = !app->fullscreen;
+				}
+			}
+		}
+	}
+	int key_count;
+	const Uint8 *keys = SDL_GetKeyboardState(&key_count);
+	Controls controls = bindings_controls(&app->r->bindings, keys, key_count);
+	app->accumulator += elapsed;
+	while (app->accumulator >= STEP) {
+		Controls taps = bindings_controls(&app->r->bindings, app->pressed, SDL_NUM_SCANCODES);
+		Controls sampled = controls;
+		sampled.left |= taps.left; sampled.right |= taps.right;
+		memset(app->pressed, 0, sizeof app->pressed);
+		game_update(game, STEP, sampled);
+		app->accumulator -= STEP;
+	}
+	game_draw(game);
+	app->count++;
+	if (app->frames > 0 && app->count >= app->frames) app->running = false;
+	if (!app->running && app->screenshot && !save_screenshot(app->r, app->screenshot)) {
+		fail_message("Ошибка сохранения снимка: %s", SDL_GetError()); app->exit_status = 1;
+	}
+	SDL_RenderPresent(app->r->renderer);
+#ifndef __EMSCRIPTEN__
+	if (!app->headless && app->running) {
+		double spent = (double)(SDL_GetPerformanceCounter() - app->previous) / app->frequency;
+		double remaining = STEP - app->accumulator - spent;
+		if (remaining > 0) {
+			int timeout = (int)ceil(remaining * 1000.);
+			app->pending_event = SDL_WaitEventTimeout(&app->event, timeout) != 0;
+		}
+	}
+#endif
+
+#ifdef __EMSCRIPTEN__
+	if (!app->running) {
+		emscripten_cancel_main_loop();
+		SDL_StopTextInput();
+		resources_shutdown(app->r); free(app->r);
+		IMG_Quit(); TTF_Quit(); SDL_Quit();
+		web_app = NULL;
+		free(app);
+		web_notify_stopped();
+	}
+#endif
+}
 
 int main(int argc, char **argv) {
 	bool headless = false, testing = false, ending_screen = false, scores_screen = false;
@@ -174,8 +299,12 @@ int main(int argc, char **argv) {
 		resources_shutdown(r); free(r); IMG_Quit(); TTF_Quit(); SDL_Quit(); return 1;
 	}
 
-	Game game;
-	memset(&game, 0, sizeof game);
+	Application *app = calloc(1, sizeof *app);
+	if (!app) {
+		resources_shutdown(r); free(r); IMG_Quit(); TTF_Quit(); SDL_Quit(); return 1;
+	}
+	app->r = r;
+	Game *game = &app->game;
 
 	if (!headless) {
 		resolve_save_paths(r);
@@ -183,92 +312,42 @@ int main(int argc, char **argv) {
 	}
 
 	if (!resources_load(r, assets)) {
-		resources_shutdown(r); free(r); IMG_Quit(); TTF_Quit(); SDL_Quit(); return 1;
+		resources_shutdown(r); free(r); free(app); IMG_Quit(); TTF_Quit(); SDL_Quit(); return 1;
 	}
 	if (testing) {
 		int result = self_test(r);
-		resources_shutdown(r); free(r); IMG_Quit(); TTF_Quit(); SDL_Quit(); return result;
+		resources_shutdown(r); free(r); free(app); IMG_Quit(); TTF_Quit(); SDL_Quit(); return result;
 	}
 
 	/* Запускаем сброс игры ПОСЛЕ загрузки всех ресурсов и world.json */
-	game_reset(&game, r);
+	game_reset(game, r);
 	
-	if (start_area >= 0) game_explore(&game, start_area, segment);
-	if (headless) game.title = false;
-	if (intro_page) { game.title = true; game.intro_page = intro_page - 1; }
-	if (help_screen) { game.help_open = true; game.help_page = help_screen - 1; }
-	if (settings_screen) { game.location_menu = true; game.settings_page = settings_screen - 1; }
-	if (ending_screen) { game.title = false; game.spawn_time = 0; game.treasures = 7; game.won = true; }
-	if (scores_screen) game_scores_open(&game, false);
+	if (start_area >= 0) game_explore(game, start_area, segment);
+	if (headless) game->title = false;
+	if (intro_page) { game->title = true; game->intro_page = intro_page - 1; }
+	if (help_screen) { game->help_open = true; game->help_page = help_screen - 1; }
+	if (settings_screen) { game->location_menu = true; game->settings_page = settings_screen - 1; }
+	if (ending_screen) { game->title = false; game->spawn_time = 0; game->treasures = 7; game->won = true; }
+	if (scores_screen) game_scores_open(game, false);
 
-	bool running = true, fullscreen = false, text_input = false;
-	int count = 0, exit_status = 0;
-	SDL_Event event;
-	bool pending_event = false;
-	Uint8 pressed[SDL_NUM_SCANCODES] = {0};
-	double accumulator = 0.;
-	Uint64 previous = SDL_GetPerformanceCounter();
-	double frequency = (double)SDL_GetPerformanceFrequency();
+	app->running = true;
+	app->headless = headless;
+	app->frames = frames;
+	app->screenshot = screenshot;
+	app->previous = SDL_GetPerformanceCounter();
+	app->frequency = (double)SDL_GetPerformanceFrequency();
 
-	while (running) {
-		Uint64 now = SDL_GetPerformanceCounter();
-		double elapsed = headless ? 1. / 60. : (double)(now - previous) / frequency;
-		previous = now; if (elapsed > .1) elapsed = .1;
-		sync_text_input(&game, &text_input);
+#ifdef __EMSCRIPTEN__
+	web_app = app;
+	emscripten_set_main_loop_arg(application_frame, app, 0, true);
+#else
+	while (app->running) application_frame(app);
+#endif
 
-		while (pending_event || SDL_PollEvent(&event)) {
-			pending_event = false;
-			if (event.type == SDL_QUIT) running = false;
-			else if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_FOCUS_LOST && !game.title) {
-				game.paused = true; memset(pressed, 0, sizeof pressed);
-			} else if (event.type == SDL_TEXTINPUT) {
-				if (game.location_menu && game.settings_page == 3)
-					score_edit_text(&game, event.text.text);
-				else
-					game_score_text(&game, event.text.text);
-			} else if (event.type == SDL_KEYDOWN) {
-				if (!event.key.repeat && event.key.keysym.scancode > SDL_SCANCODE_UNKNOWN && event.key.keysym.scancode < SDL_NUM_SCANCODES)
-					pressed[event.key.keysym.scancode] = 1;
-				int action = game_key_event(&game, &event.key);
-				sync_text_input(&game, &text_input);
-				if (action == 1) { running = false; break; }
-				if (action == 2) {
-					fullscreen = !fullscreen;
-					if (SDL_SetWindowFullscreen(r->window, fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0) != 0) {
-						fail_message("Ошибка полноэкранного режима: %s", SDL_GetError()); fullscreen = !fullscreen;
-					}
-				}
-			}
-		}
-		int key_count;
-		const Uint8 *keys = SDL_GetKeyboardState(&key_count);
-		Controls controls = bindings_controls(&r->bindings, keys, key_count);
-		accumulator += elapsed;
-		while (accumulator >= STEP) {
-			Controls taps = bindings_controls(&r->bindings, pressed, SDL_NUM_SCANCODES);
-			Controls sampled = controls;
-			sampled.left |= taps.left; sampled.right |= taps.right;
-			memset(pressed, 0, sizeof pressed);
-			game_update(&game, STEP, sampled);
-			accumulator -= STEP;
-		}
-		game_draw(&game);
-		count++;
-		if (frames > 0 && count >= frames) running = false;
-		if (!running && screenshot && !save_screenshot(r, screenshot)) {
-			fail_message("Ошибка сохранения снимка: %s", SDL_GetError()); exit_status = 1;
-		}
-		SDL_RenderPresent(r->renderer);
-		if (!headless && running) {
-			double spent = (double)(SDL_GetPerformanceCounter() - previous) / frequency;
-			double remaining = STEP - accumulator - spent;
-			if (remaining > 0) {
-				int timeout = (int)ceil(remaining * 1000.);
-				pending_event = SDL_WaitEventTimeout(&event, timeout) != 0;
-			}
-		}
-	}
 	
 	resources_shutdown(r); free(r); IMG_Quit(); TTF_Quit(); SDL_Quit();
-	return exit_status;
+	int result = app->exit_status;
+	free(app);
+	return result;
 }
+
