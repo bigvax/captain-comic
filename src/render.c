@@ -77,7 +77,8 @@ static void digits_scaled(Resources *r, int value, int x, int y, bool small) {
 	char number[16];
 	snprintf(number, sizeof number, "%09d", value < 0 ? 0 : value % 1000000000);
 
-	int ox = small ? (x + 18) : x;
+	/* Keep table scores right-aligned and the HUD score centered as gaps grow. */
+	int ox = (small ? x + 18 : x) - (small ? 2 : 1);
 	int oy = small ? (y - 1) : y;
 	SDL_Color lit = {255, 75, 75, 255};
 
@@ -86,7 +87,7 @@ static void digits_scaled(Resources *r, int value, int x, int y, bool small) {
 		for (int j = 0; j < 7; j++) {
 			if (m & (1u << j)) {
 				SDL_Rect b = segments[j];
-				fill(r, ox + i * 6 + b.x, oy + b.y, b.w, b.h, lit);
+				fill(r, ox + i * 6 + i / 3 + b.x, oy + b.y, b.w, b.h, lit);
 			}
 		}
 	}
