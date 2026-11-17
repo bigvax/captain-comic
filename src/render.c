@@ -19,6 +19,7 @@ static int label_count;
 static const SDL_Color WHITE = {235, 235, 255, 255}, CYAN = {85, 255, 255, 255},
 		       GOLD = {255, 220, 60, 255};
 
+static void label(int x, int y, SDL_Color color, bool big, const char *format, ...) CC_PRINTF(5, 6);
 static void label(int x, int y, SDL_Color color, bool big, const char *format, ...) {
 	if (label_count >= 64)
 		return;
@@ -678,7 +679,7 @@ void game_draw(Game *g) {
 				sprite(r, r->player, g->face > 0 ? 0 : 5, (int)lround(g->x) - camera, (int)g->y + HUD_HEIGHT, 16, 32, 255);
 			}
 			sprite(r, r->arrival, rev_frame, (int)lround(g->x) - camera, (int)g->y + HUD_HEIGHT, 16, 32, 255);
-		} else if ((g->ending_stage == ENDING_NONE)) {
+		} else if (g->ending_stage == ENDING_NONE) {
 			sprite(r, r->player, game_player_frame(g), (int)lround(g->x) - camera, (int)g->y + HUD_HEIGHT, 16, 32, 255);
 		}
 	}

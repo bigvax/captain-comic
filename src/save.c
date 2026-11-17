@@ -12,7 +12,7 @@ EM_JS(void, web_restore_saves, (void), {
 			if (Module['ccStorageError']) Module['ccStorageError']();
 		}
 	}
-});
+})
 EM_JS(int, web_persist_save, (const char *filename), {
 	var path = UTF8ToString(filename);
 	if (!path.startsWith('/persist/')) return 1;
@@ -23,7 +23,7 @@ EM_JS(int, web_persist_save, (const char *filename), {
 		if (Module['ccStorageError']) Module['ccStorageError']();
 		return 0;
 	}
-});
+})
 #endif
 #ifdef _WIN32
 #include <windows.h>

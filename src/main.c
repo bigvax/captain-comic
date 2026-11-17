@@ -128,7 +128,7 @@ typedef struct {
 static Application *web_app;
 EM_JS(void, web_notify_stopped, (void), {
 	if (Module['ccStopped']) Module['ccStopped']();
-});
+})
 EMSCRIPTEN_KEEPALIVE void cc_web_action(int action) {
 	if (!web_app || !web_app->running) return;
 	static const SDL_Scancode keys[] = {SDL_SCANCODE_F1, SDL_SCANCODE_F2,

@@ -230,7 +230,12 @@ void sound_stop(Resources *r);
 void sound_play(Resources *r, int effect);
 void sound_set_enabled(Resources *r, bool enabled);
 void sound_mix(AudioState *audio, float *output, int frames);
-void fail_message(const char *format, ...);
+#if defined(__GNUC__) || defined(__clang__)
+#define CC_PRINTF(format_index, first_arg) __attribute__((format(printf, format_index, first_arg)))
+#else
+#define CC_PRINTF(format_index, first_arg)
+#endif
+void fail_message(const char *format, ...) CC_PRINTF(1, 2);
 bool box_overlap(Box a, Box b);
 bool tile_solid(const Resources *r, int area, int column, int row);
 bool box_hits(const Resources *r, int area, Box body);

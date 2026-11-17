@@ -65,10 +65,14 @@ check-web:
 		'  source ~/emsdk/emsdk_env.sh' \
 		'Затем повторите: make web'; exit 1; \
 	}
-web: check-web data/assets.pak
+# Как в нативных сборках: предупреждения стороннего miniz отключены отдельно.
+build/web-support/miniz.o: src/miniz.c src/miniz.h Makefile | check-web
+	@mkdir -p $(@D)
+	$(EMCC) $(COMMON_FLAGS) -O2 $(CPPFLAGS) $(CFLAGS) -w -c $< -o $@
+web: check-web data/assets.pak build/web-support/miniz.o
 	@mkdir -p $(WEB_OUTPUT)
 	$(EMCC) $(COMMON_FLAGS) $(WARNINGS) $(WEB_FLAGS) $(CPPFLAGS) $(CFLAGS) \
-		$(addprefix src/,$(addsuffix .c,$(SOURCES))) \
+		$(addprefix src/,$(addsuffix .c,$(filter-out miniz,$(SOURCES)))) build/web-support/miniz.o \
 		--preload-file data/assets.pak@/data/assets.pak $(LDFLAGS) -lm $(LDLIBS) \
 		-o $(WEB_OUTPUT)/captain-comic.js
 	cp web/index.html web/app.js web/style.css $(WEB_OUTPUT)/
