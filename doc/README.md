@@ -1,12 +1,14 @@
 <p align="center"><img src="images/icon.png" alt="Captain Comic" width="64" height="64"></p>
 
-<h1 align="center">Adventures of Captain Comic (Linux/Windows)</h1>
+<h1 align="center">Adventures of Captain Comic (Linux / Windows / Web)</h1>
 
 <br>
 
 Кроссплатформенный порт культовой DOS-аркады **«Приключения Капитана Комика»** (*Adventures of Captain Comic*, Rev 5, Майкл Денио, 1988), написанный в ноябре 2026 г. Максимом Живлюком, без использования сторонних игровых движков.
 
 Стек проекта: **C11 + SDL2 + SDL2_ttf + SDL2_image**, компилятор — **GCC 15.2.0**.
+
+**Теперь и в браузере:** [играть в веб-версию](https://captain-comic-browser.baltexpo-8341.chatgpt.site/). Игра работает через WebAssembly, управление — с клавиатуры; рекорды и настройки сохраняются в браузере. Размещённая версия пока доступна владельцу через аккаунт ChatGPT.
 
 Станьте отважным космическим героем Капитаном Комиком и отправьтесь в опасную экспедицию на загадочную планету **Тамби**!
 
