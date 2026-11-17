@@ -829,7 +829,7 @@ void game_draw(Game *g) {
 				else { label(16, y + 6, (SDL_Color){100, 100, 100, 255}, false, "%d. [ПУСТАЯ ЗАПИСЬ]", i + 1); labels[label_count - 1].center_y = true; digits_scaled(r, 0, 218, y + 2, true); }
 			}
 			fill(r, 12, HUD_HEIGHT + 139, 296, 1, (SDL_Color){85, 95, 110, 255});
-			draw_rich_line(r, 14, HUD_HEIGHT + 142, 5.3, WHITE,
+			draw_rich_line(r, 14, HUD_HEIGHT + 144, 5.3, WHITE,
 				"{g}Ins{/g} — добавить  |  {g}Del{/g} — удалить  |  {g}Влево/Вправо{/g} — очки  |  {g}Shift+влево/вправо{/g} — ×10  |  {g}Ctrl+влево/вправо{/g} — ×100");
 			draw_rich_line(r, 14, HUD_HEIGHT + 152, 5.3, WHITE,
 				"{g}Буквы{/g} — имя  |  {g}Backspace{/g} — стереть  |  {c}Tab / PgUp / PgDn{/c} — страницы  |  {c}F4{/c} — назад");
