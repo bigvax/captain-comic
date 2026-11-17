@@ -185,7 +185,10 @@ bool score_edit_key(Game *g, SDL_Scancode key, SDL_Keymod modifiers) {
 		switch (key) {
 		case SDL_SCANCODE_LEFT: entry->score = entry->score > step ? entry->score - step : 1; break;
 		case SDL_SCANCODE_RIGHT: entry->score = entry->score <= 999999999 - step ? entry->score + step : 999999999; break;
-		case SDL_SCANCODE_BACKSPACE: backspace_name(entry->name); break;
+		case SDL_SCANCODE_BACKSPACE:
+			if (!strcmp(entry->name, "НОВЫЙ")) entry->name[0] = 0;
+			else backspace_name(entry->name);
+			break;
 		case SDL_SCANCODE_DELETE:
 			memmove(entry, entry + 1, (size_t)(table->count - row - 1) * sizeof *entry);
 			table->entries[--table->count] = (ScoreEntry){0};

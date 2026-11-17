@@ -2169,6 +2169,19 @@ int self_test(Resources *r) {
 	game_key_event(&g, &score_key);
 	CHECK(r->scores.count == 1 && g.settings_row == 0 && !g.fire_pending);
 	CHECK(!strcmp(r->scores.entries[0].name, "НОВЫЙ") && r->scores.entries[0].score == 1000);
+	scenarios++; /* Untouched default survives navigation; Backspace clears it at once. */
+	game_key(&g, SDL_SCANCODE_RIGHT, false);
+	CHECK(!strcmp(r->scores.entries[g.settings_row].name, "НОВЫЙ"));
+	game_key(&g, SDL_SCANCODE_BACKSPACE, false);
+	CHECK(!r->scores.entries[g.settings_row].name[0]);
+	game_key(&g, SDL_SCANCODE_BACKSPACE, false);
+	CHECK(!r->scores.entries[g.settings_row].name[0]);
+	score_edit_text(&g, "Максим");
+	game_key(&g, SDL_SCANCODE_BACKSPACE, false);
+	CHECK(!strcmp(r->scores.entries[g.settings_row].name, "Макси"));
+	/* Restore the untouched insertion for the keypad and persistence checks below. */
+	snprintf(r->scores.entries[g.settings_row].name, SCORE_NAME_BYTES, "%s", "НОВЫЙ");
+	r->scores.entries[g.settings_row].score = 1000;
 	score_key.repeat = 1;
 	game_key_event(&g, &score_key);
 	CHECK(r->scores.count == 1);
