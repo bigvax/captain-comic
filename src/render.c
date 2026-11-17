@@ -493,8 +493,31 @@ static TTF_Font *font(Resources *r, int size) {
 }
 
 
+/* Arrow hints are separate labels: Magistral has no horizontal arrow glyphs. */
+static void rich_segment(Resources *r, int *x, int y, double size, SDL_Color color, const char *text) {
+	const char *p = text;
+	while (*p) {
+		const char *arrows = strstr(p, "←/→");
+		int length = arrows ? (int)(arrows - p) : (int)strlen(p);
+		if (length) {
+			char part[256];
+			snprintf(part, sizeof part, "%.*s", length, p);
+			label(*x, y, color, false, "%s", part);
+			labels[label_count - 1].size = size;
+			int width = 0;
+			TTF_Font *f12 = font(r, 12);
+			if (f12) TTF_SizeUTF8(f12, part, &width, NULL);
+			*x += (int)lround(width * (size / 12.0));
+		}
+		if (!arrows) break;
+		label(*x, y, color, false, "←/→");
+		labels[label_count - 1].size = size;
+		*x += (int)lround(size * 2.2);
+		p = arrows + strlen("←/→");
+	}
+}
+
 static void draw_rich_line(Resources *r, int x, int y, double size, SDL_Color base_color, const char *text) {
-	TTF_Font *f12 = font(r, 12);
 	int cur_x = x;
 	const char *p = text;
 	while (p && *p) {
@@ -524,11 +547,7 @@ static void draw_rich_line(Resources *r, int x, int y, double size, SDL_Color ba
 			if (len >= (int)sizeof(buf)) len = (int)sizeof(buf) - 1;
 			memcpy(buf, seg_start, (size_t)len);
 			buf[len] = '\0';
-			label(cur_x, y, col, false, "%s", buf);
-			labels[label_count - 1].size = size;
-			int w12 = 0;
-			if (f12) TTF_SizeUTF8(f12, buf, &w12, NULL);
-			cur_x += (int)lround(w12 * (size / 12.0));
+			rich_segment(r, &cur_x, y, size, col, buf);
 		}
 	}
 }
@@ -810,9 +829,9 @@ void game_draw(Game *g) {
 				else { label(16, y + 6, (SDL_Color){100, 100, 100, 255}, false, "%d. [ПУСТАЯ ЗАПИСЬ]", i + 1); labels[label_count - 1].center_y = true; digits_scaled(r, 0, 218, y + 2, true); }
 			}
 			draw_rich_line(r, 14, HUD_HEIGHT + 142, 5.3, WHITE,
-				"{g}Ins{/g} — добавить | {g}Del{/g} — удалить | {g}Влево/Вправо{/g} — очки | {g}Shift{/g} ×10 | {g}Ctrl{/g} ×100");
+				"{g}Ins{/g} — добавить  |  {g}Del{/g} — удалить  |  {g}Влево/Вправо{/g} — очки  |  {g}Shift ←/→{/g} ×10  |  {g}Ctrl ←/→{/g} ×100");
 			draw_rich_line(r, 14, HUD_HEIGHT + 152, 5.3, WHITE,
-				"{g}Буквы{/g} — имя | {g}Backspace{/g} — стереть | {c}Tab / PgUp / PgDn{/c} — страницы | {c}F4{/c} — назад");
+				"{g}Буквы{/g} — имя  |  {g}Backspace{/g} — стереть  |  {c}Tab / PgUp / PgDn{/c} — страницы  |  {c}F4{/c} — назад");
 		}
 	} else {
 		if (g->paused || g->won || g->over) {
@@ -914,7 +933,23 @@ present:
 	}
 	if (lives_visible) draw_lives_pixels(g, dest, sx, sy);
 	for (int i = 0; i < label_count; i++) {
-		Label *l = &labels[i]; TTF_Font *f = font(r, (int)lround(l->size * sx)); if (!f) continue;
+		Label *l = &labels[i];
+		if (!strcmp(l->text, "←/→")) {
+			float unit = (float)(l->size * sx);
+			float x = (float)(dest.x + l->x * sx);
+			float y = (float)(dest.y + l->y * sy + unit * .65f);
+			SDL_SetRenderDrawColor(renderer, l->color.r, l->color.g, l->color.b, l->color.a);
+			SDL_RenderDrawLineF(renderer, x, y, x + unit * .6f, y);
+			SDL_RenderDrawLineF(renderer, x, y, x + unit * .22f, y - unit * .22f);
+			SDL_RenderDrawLineF(renderer, x, y, x + unit * .22f, y + unit * .22f);
+			SDL_RenderDrawLineF(renderer, x + unit, y - unit * .4f, x + unit * .8f, y + unit * .4f);
+			x += unit * 1.35f;
+			SDL_RenderDrawLineF(renderer, x, y, x + unit * .6f, y);
+			SDL_RenderDrawLineF(renderer, x + unit * .6f, y, x + unit * .38f, y - unit * .22f);
+			SDL_RenderDrawLineF(renderer, x + unit * .6f, y, x + unit * .38f, y + unit * .22f);
+			continue;
+		}
+		TTF_Font *f = font(r, (int)lround(l->size * sx)); if (!f) continue;
 		TextCache *cache = &r->text_cache[i];
 		if (!cache->texture || cache->font != f || strcmp(cache->text, l->text) || cache->color.r != l->color.r || cache->color.g != l->color.g || cache->color.b != l->color.b || cache->color.a != l->color.a) {
 			SDL_Surface *surface = TTF_RenderUTF8_Blended(f, l->text, l->color); if (!surface) continue;
