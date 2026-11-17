@@ -828,6 +828,7 @@ void game_draw(Game *g) {
 				if (i < r->scores.count) { label(16, y + 6, row_color, false, "%d. %s", i + 1, entry->name); labels[label_count - 1].center_y = true; digits_scaled(r, entry->score, 218, y + 2, true); }
 				else { label(16, y + 6, (SDL_Color){100, 100, 100, 255}, false, "%d. [ПУСТАЯ ЗАПИСЬ]", i + 1); labels[label_count - 1].center_y = true; digits_scaled(r, 0, 218, y + 2, true); }
 			}
+			fill(r, 12, HUD_HEIGHT + 139, 296, 1, (SDL_Color){85, 95, 110, 255});
 			draw_rich_line(r, 14, HUD_HEIGHT + 142, 5.3, WHITE,
 				"{g}Ins{/g} — добавить  |  {g}Del{/g} — удалить  |  {g}Влево/Вправо{/g} — очки  |  {g}Shift ←/→{/g} ×10  |  {g}Ctrl ←/→{/g} ×100");
 			draw_rich_line(r, 14, HUD_HEIGHT + 152, 5.3, WHITE,
@@ -937,7 +938,12 @@ present:
 		if (!strcmp(l->text, "←/→")) {
 			float unit = (float)(l->size * sx);
 			float x = (float)(dest.x + l->x * sx);
-			float y = (float)(dest.y + l->y * sy + unit * .65f);
+			TTF_Font *arrow_font = font(r, (int)lround(unit));
+			int min_y = 0, max_y = 0;
+			float middle = unit * .5f;
+			if (arrow_font && TTF_GlyphMetrics(arrow_font, 'H', NULL, NULL, &min_y, &max_y, NULL) == 0)
+				middle = TTF_FontAscent(arrow_font) - (min_y + max_y) * .5f;
+			float y = (float)(dest.y + l->y * sy + middle);
 			SDL_SetRenderDrawColor(renderer, l->color.r, l->color.g, l->color.b, l->color.a);
 			SDL_RenderDrawLineF(renderer, x, y, x + unit * .6f, y);
 			SDL_RenderDrawLineF(renderer, x, y, x + unit * .22f, y - unit * .22f);
