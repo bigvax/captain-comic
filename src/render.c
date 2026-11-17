@@ -803,22 +803,16 @@ void game_draw(Game *g) {
 		} else if (g->settings_page == 3) {
 			if (g->settings_row >= SCORE_COUNT) g->settings_row = SCORE_COUNT - 1;
 			for (int i = 0; i < SCORE_COUNT; i++) {
-				int y = HUD_HEIGHT + 16 + i * 10; ScoreEntry *entry = &r->scores.entries[i];
-				if (i == g->settings_row) fill(r, 12, y, 296, 10, (SDL_Color){40, 55, 80, 255});
+				int y = HUD_HEIGHT + 18 + i * 12; ScoreEntry *entry = &r->scores.entries[i];
+				if (i == g->settings_row) fill(r, 12, y, 296, 12, (SDL_Color){40, 55, 80, 255});
 				SDL_Color row_color = (i == g->settings_row) ? GOLD : CYAN;
-				if (i < r->scores.count) { label(16, y + 5, row_color, false, "%d. %s", i + 1, entry->name); labels[label_count - 1].center_y = true; digits_scaled(r, entry->score, 218, y + 2, true); }
-				else { label(16, y + 5, (SDL_Color){100, 100, 100, 255}, false, "%d. [ПУСТАЯ ЗАПИСЬ]", i + 1); labels[label_count - 1].center_y = true; digits_scaled(r, 0, 218, y + 2, true); }
+				if (i < r->scores.count) { label(16, y + 6, row_color, false, "%d. %s", i + 1, entry->name); labels[label_count - 1].center_y = true; digits_scaled(r, entry->score, 218, y + 2, true); }
+				else { label(16, y + 6, (SDL_Color){100, 100, 100, 255}, false, "%d. [ПУСТАЯ ЗАПИСЬ]", i + 1); labels[label_count - 1].center_y = true; digits_scaled(r, 0, 218, y + 2, true); }
 			}
-			draw_rich_line(r, 14, HUD_HEIGHT + 120, 5.3, WHITE,
-				"{g}Ins{/g} — добавить   |   {g}Del{/g} — удалить   |   Цифровой блок: {g}Num Lock{/g} выкл.");
-			draw_rich_line(r, 14, HUD_HEIGHT + 128, 5.3, WHITE,
-				"{g}Влево/Вправо{/g} — очки (шаг 1000)   |   {g}Вверх/Вниз{/g} — строка");
-			draw_rich_line(r, 14, HUD_HEIGHT + 136, 5.3, WHITE,
-				"{g}Shift+Влево/Вправо{/g} — шаг ×10   |   {g}Ctrl+Влево/Вправо{/g} — шаг ×100");
-			draw_rich_line(r, 14, HUD_HEIGHT + 144, 5.3, WHITE,
-				"{g}Буквы{/g} — имя   |   {g}Backspace{/g} — стереть последнюю букву");
+			draw_rich_line(r, 14, HUD_HEIGHT + 142, 5.3, WHITE,
+				"{g}Ins{/g} — добавить | {g}Del{/g} — удалить | {g}Влево/Вправо{/g} — очки | {g}Shift{/g} ×10 | {g}Ctrl{/g} ×100");
 			draw_rich_line(r, 14, HUD_HEIGHT + 152, 5.3, WHITE,
-				"{g}Tab / PgUp / PgDn{/g} — страницы настроек (1–4)   |   {g}F4{/g} — назад");
+				"{g}Буквы{/g} — имя | {g}Backspace{/g} — стереть | {c}Tab / PgUp / PgDn{/c} — страницы | {c}F4{/c} — назад");
 		}
 	} else {
 		if (g->paused || g->won || g->over) {
