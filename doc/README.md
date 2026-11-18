@@ -3,8 +3,7 @@
 <h3 align="center">(Linux / Windows / Web)</h3>
 <br>
 
-Современное кроссплатформенное переиздание культового DOS-платформера **«Приключения Капитана Комика»**  
-([*The Adventures of Captain Comic*](https://en.wikipedia.org/wiki/The_Adventures_of_Captain_Comic), Rev 5, *Майкл Денио*, 1988).
+Современное кроссплатформенное переиздание культового DOS-платформера **«Приключения Капитана Комика»** ([*The Adventures of Captain Comic*](https://en.wikipedia.org/wiki/The_Adventures_of_Captain_Comic), Rev 5, *Майкл Денио*, 1988).
 
 The **Adventures of Captain Comic** (более известная как просто Captain Comic) — видеоигра, созданная Майклом Денио и выпущенная в 1988 году для ПК по модели shareware (условно-бесплатно).  
 В 1990 году вышел порт этой игры на NES, который сильно отличается от ПК-версии.
