@@ -40,6 +40,26 @@
 | <img src="images/items/08_cola.png" width="32" alt="Blastola Cola"> | **Бластер-кола** (*Blastola Cola*) | Даёт оружие и увеличивает число одновременных выстрелов до пяти. |
 | <img src="images/items/shield.png" width="32" alt="Shield"> | **Щит** (*Shield*) | Восстанавливает энергию щита, при полной шкале даёт дополнительную жизнь. |
 
+## Противники
+
+| Иконка | Название врага | Перевод / Описание | Где встречается |
+| :---: | :--- | :--- | :--- |
+| <img src="images/enemies/enemy_02.png" width="32" alt="Brave Bird"> | **Brave Bird** | Храбрая птица | Скалистый лес, Ангар, Замок |
+| <img src="images/enemies/enemy_03.png" width="32" alt="Shy Bird"> | **Shy Bird** | Пугливая птица (атакует со спины) | Скалистый лес (Forest) |
+| <img src="images/enemies/enemy_04.png" width="32" alt="Bug-Eyes"> | **Bug-Eyes** | Пучеглаз (прыгает по земле) | Озеро Сири (Lake) |
+| <img src="images/enemies/enemy_05.png" width="32" alt="Fireball"> | **Fireball** | Огненный шар | Озеро Сири (Lake) |
+| <img src="images/enemies/enemy_00.png" width="32" alt="Space Pollen"> | **Space Pollen** | Космическая пыльца | Луна Тамби (Moon) |
+| <img src="images/enemies/enemy_01.png" width="32" alt="Saucer"> | **Saucer** | Летающая тарелка | Луна Тамби (Moon) |
+| <img src="images/enemies/enemy_06.png" width="32" alt="Glow Globe"> | **Glow Globe** | Светящийся шар (катится по полу) | Космическая база (Base) |
+| <img src="images/enemies/enemy_07.png" width="32" alt="Blind Toad"> | **Blind Toad** | Слепая жаба | Пещера слепых жаб (Cave) |
+| <img src="images/enemies/enemy_08.png" width="32" alt="Killer Bee"> | **Killer Bee** | Пчела убийца | Пещера слепых жаб, Ангар, Замок |
+| <img src="images/enemies/enemy_09.png" width="32" alt="Beach Ball"> | **Beach Ball** | Пляжный мяч | Ангар, Замок |
+| <img src="images/enemies/enemy_10.png" width="32" alt="Atom"> | **Atom** | Атом | Комплекс (Comp / Tube) |
+| <img src="images/enemies/enemy_11.png" width="32" alt="Spark"> | **Spark** | Искра | Комплекс (Comp / Tube) |
+| <img src="images/enemies/enemy_12.png" width="32" alt="F.W. Bros."> | **F.W. Bros.** | Братья фейерверки | Комплекс (Comp / Tube) |
+| <img src="images/enemies/enemy_13.png" width="32" alt="Spinner"> | **Spinner** | Спиннер (атакует, когда герой отвернулся) | Замок (Castle) |
+---
+
 ## Советы
 
 * **Нет сохранений:** В игре нет сохранений и паролей, поэтому действуйте медленно и осторожно. Не пытайтесь пробежать уровень напролом, получая урон.
