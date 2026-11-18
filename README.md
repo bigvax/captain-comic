@@ -332,7 +332,7 @@ make web-serve
 - `src/cc.h` / `src/miniz.c` / `src/miniz.h` / `src/assets_data.h` — общие структуры, распаковщик архивов и вшитые ресурсы.
 - `web/` — веб-обёртка для сборки WebAssembly, стили и панель управления в браузере.
 - `assets/` — игровые уровни и графика (`dos/`), заставки (`intro/`), иконки (`icons/`) и шрифт (`fonts/`).
-- `doc/` — документация (`README.md`, `WALKTHROUGH.md`, `CHANGELOG.md`, `AUDIT.md`), иллюстрации (`images/`) и материалы зависимостей.
+- `doc/` — документация (`README.md`, `CHANGELOG.md` и т.п.), иллюстрации (`images/`) и материалы зависимостей.
 - `data/` — упакованный пакет `assets.pak`, рантайм-библиотеки Windows (`.dll`) и портативные сохранения (`scores.dat`, `keys.cfg`).
 - `deps/` — локальные статические зависимости (`deps/linux/`) и sysroot для MinGW-w64 (`deps/win32/sysroot/`).
 - `tools/` — вспомогательные скрипты сборки (`pack_assets.py`, `dist.py`, `make_delaylib.py`, автотесты ввода и ресурсов).
