@@ -207,7 +207,6 @@ sudo apt install gcc make pkg-config python3 libsdl2-dev libsdl2-ttf-dev libsdl2
 ### Цели `Makefile`
 
 
-
 | Команда | Результат | Описание |
 | :--- | :--- | :--- |
 | `make` *(или `make linux`)* | `captain-comic` | Обычная сборка для текущей Linux-системы |
@@ -217,8 +216,8 @@ sudo apt install gcc make pkg-config python3 libsdl2-dev libsdl2-ttf-dev libsdl2
 | `make static` | `captain-comic-static` | Совместимое имя для копии `captain-comic-standalone` (повторная компиляция не выполняется) |
 | `make win` | `captain-comic.exe` + `data/*.dll` | Сборка под Windows x64 с отложенной загрузкой DLL из `data/` и вшитой иконкой |
 | `make win‑standalone` | `captain-comic-standalone.exe` | Единый автономный `.exe` под Windows x64 со статическим SDL2 и вшитыми ресурсами |
-| `make data/assets.pak` | `data/assets.pak` | Упаковка каталога `assets/` в сжатый ZIP-архив ресурсов (`miniz`) |
-| `make src/assets_data.h` | `src/assets_data.h` | Генерация C-массива `assets_pak` из `data/assets.pak` для standalone-сборок |
+| `make data/⁠assets.pak` | `data/assets.pak` | Упаковка каталога `assets/` в сжатый ZIP-архив ресурсов (`miniz`) |
+| `make src/⁠assets_data.h` | `src/assets_data.h` | Генерация C-массива `assets_pak` из `data/assets.pak` для standalone-сборок |
 | `make dist` | Архивы в `dist/` | Сборка 4 вариантов и упаковка 5 дистрибутивов (`.tar.gz` для Linux и `.zip` для Windows) с документацией в `doc/` |
 | `make dist‑7z` | Архивы `.7z` в `dist/` | Сборка и упаковка дистрибутивов со сжатием Windows-сборок в `.7z` (алиас `make dist WIN_FMT=7z`) |
 | `make web` | `build/web/` | Браузерная сборка WebAssembly через Emscripten |
