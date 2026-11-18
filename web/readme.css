@@ -26,7 +26,7 @@
 .markdown pre code{padding:0;background:none;white-space:pre;overflow-wrap:normal}
 .markdown hr{border:0;border-top:1px solid #34465e;margin:30px 0}
 .markdown blockquote{margin:20px 0;padding:1px 18px;border-left:3px solid #72e7e9;color:#bbcada}
-.markdown blockquote:has(p + p){background:#22334c;border:1px solid #2b4263;border-radius:4px;padding:8px 22px;color:#dce7f5;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.markdown blockquote:has(p + p){background:#22334c;border:1px solid #2b4263;border-radius:4px;padding:8px 22px;color:#72e7e9;box-shadow:0 8px 24px rgba(0,0,0,.35)}
 .table-scroll{overflow-x:auto;margin:18px 0}
 .markdown table{width:100%;border-collapse:collapse;font-size:14px}
 .markdown th,.markdown td{padding:10px 12px;border:1px solid #34465e;vertical-align:middle;text-align:left}
@@ -35,5 +35,23 @@
 .markdown th:first-child,.markdown td:first-child,.markdown h3+.table-scroll th:nth-child(2),.markdown h3+.table-scroll td:nth-child(2){white-space:nowrap}
 .markdown th{background:#1d2d44;color:#fff}
 .markdown tr:nth-child(even){background:#142037}
+.markdown .red{color:#f50;}
+.markdown .yellow{color:#ecec76}
+.markdown .ega-0,.markdown .ega-black{color:#000}
+.markdown .ega-1,.markdown .ega-blue{color:#00A}
+.markdown .ega-2,.markdown .ega-green{color:#0A0}
+.markdown .ega-3,.markdown .ega-cyan{color:#0AA}
+.markdown .ega-4,.markdown .ega-red{color:#A00}
+.markdown .ega-5,.markdown .ega-magenta{color:#A0A}
+.markdown .ega-6,.markdown .ega-brown{color:#A50}
+.markdown .ega-7,.markdown .ega-light-gray{color:#AAA}
+.markdown .ega-8,.markdown .ega-dark-gray{color:#555}
+.markdown .ega-9,.markdown .ega-light-blue{color:#5FF}
+.markdown .ega-10,.markdown .ega-light-green{color:#5F5}
+.markdown .ega-11,.markdown .ega-light-cyan{color:#5FF}
+.markdown .ega-12,.markdown .ega-light-red{color:#F55}
+.markdown .ega-13,.markdown .ega-light-magenta{color:#F5F}
+.markdown .ega-14,.markdown .ega-yellow{color:#FF5}
+.markdown .ega-15,.markdown .ega-white{color:#FFF}
 .docs footer{margin-top:36px;padding-top:18px;border-top:1px solid #34465e;display:flex;justify-content:space-between;align-items:center;gap:16px}
 @media(max-width:600px){.markdown{font-size:14px}.markdown h2{font-size:21px}.markdown th,.markdown td{padding:8px}.docs-nav{font-size:13px;gap:10px 16px}.markdown ul:has(li > img){columns:1}}
