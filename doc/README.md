@@ -256,15 +256,15 @@ make linux
 1. **Установите `emsdk`** один раз (официальная [инструкция Emscripten](https://emscripten.org/docs/index.html)):
 
 ```bash
-git clone https://github.com/emscripten-core/emscripten.git "\$HOME/emsdk"
-"\$HOME/emsdk/emsdk" install 7.0.0
-"\$HOME/emsdk/emsdk" activate 7.0.0
+git clone https://github.com/emscripten-core/emscripten.git "$HOME/emsdk"
+"$HOME/emsdk/emsdk" install 7.0.0
+"$HOME/emsdk/emsdk" activate 7.0.0
 ```
 
 2. **Подключите окружение и соберите проект** в каталоге игры:
 
 ```bash
-source "\$HOME/emsdk/emsdk_env.sh"
+source "$HOME/emsdk/emsdk_env.sh"
 emcc --version
 make web
 make web-serve
