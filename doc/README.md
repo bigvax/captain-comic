@@ -5,7 +5,7 @@
 
 Современное кроссплатформенное переиздание культового DOS-платформера **«Приключения Капитана Комика»** ([*The Adventures of Captain Comic*](https://en.wikipedia.org/wiki/The_Adventures_of_Captain_Comic), Rev 5, *Майкл Денио*, 1988).
 
-The **Adventures of Captain Comic** (более известная как просто Captain Comic) — видеоигра, созданная Майклом Денио и выпущенная в 1988 году для ПК по модели shareware (условно-бесплатно). 
+**The Adventures of Captain Comic** (более известная как просто Captain Comic) — видеоигра, созданная Майклом Денио и выпущенная в 1988 году для ПК по модели shareware (условно-бесплатно). 
 
 В 1990 году вышел порт этой игры на NES, который сильно отличается от ПК-версии.
 
@@ -105,7 +105,7 @@ The **Adventures of Captain Comic** (более известная как про
 
 | Иконка | Предмет | Где искать | Назначение |
 | :---: | :--- | :--- | :--- |
-| <img src="images/items/06_crown.png" width="32" alt="Crown / Crown of the Ages"> | **Корона Эпох** (*Crown of the Ages*) | Замок (Castle), 1-й экран | Главное сокровище; в этом порте запускает финал. |
+| <img src="images/items/06_crown.png" width="32" alt="Crown"> | **Корона Эпох** (*Crown of the Ages*) | Замок (Castle), 1-й экран | Главное сокровище; в этом порте запускает финал. |
 | <img src="images/items/05_gems.png" width="32" alt="Gems"> | **Самоцветы** (*Gems*) | Луна Тамби (Moon), 3-й экран | Главное сокровище. |
 | <img src="images/items/07_gold.png" width="32" alt="Gold"> | **Мешок золота** (*Gold*) | Пещера слепых жаб (Cave), 2-й экран | Главное сокровище. |
 | <img src="images/items/01_key.png" width="32" alt="Door Key"> | **Ключ от двери** (*Door Key*) | Скалистый лес (Forest), 3-й экран | Открывает запертые двери. |
@@ -172,11 +172,11 @@ The **Adventures of Captain Comic** (более известная как про
 | <img src="images/enemies/enemy_05.png" width="32" alt="Fireball"> | **Fireball** | Огненный шар | Озеро Сири (Lake) |
 | <img src="images/enemies/enemy_06.png" width="32" alt="Glow Globe"> | **Glow Globe** | Светящийся шар (катится по полу) | Космическая база (Base) |
 | <img src="images/enemies/enemy_07.png" width="32" alt="Blind Toad"> | **Blind Toad** | Слепая жаба | Пещера слепых жаб (Cave) |
-| <img src="images/enemies/enemy_08.png" width="32" alt="Killer Bee"> | **Killer Bee** | Пчела-убийца | Пещера слепых жаб, Ангар, Замок |
+| <img src="images/enemies/enemy_08.png" width="32" alt="Killer Bee"> | **Killer Bee** | Пчела убийца | Пещера слепых жаб, Ангар, Замок |
 | <img src="images/enemies/enemy_09.png" width="32" alt="Beach Ball"> | **Beach Ball** | Пляжный мяч | Ангар, Замок |
 | <img src="images/enemies/enemy_10.png" width="32" alt="Atom"> | **Atom** | Атом | Комплекс (Comp / Tube) |
 | <img src="images/enemies/enemy_11.png" width="32" alt="Spark"> | **Spark** | Искра | Комплекс (Comp / Tube) |
-| <img src="images/enemies/enemy_12.png" width="32" alt="F.W. Bros."> | **F.W. Bros.** | Братья-фейерверки | Комплекс (Comp / Tube) |
+| <img src="images/enemies/enemy_12.png" width="32" alt="F.W. Bros."> | **F.W. Bros.** | Братья фейерверки | Комплекс (Comp / Tube) |
 | <img src="images/enemies/enemy_13.png" width="32" alt="Spinner"> | **Spinner** | Спиннер (атакует, когда герой отвернулся) | Замок (Castle) |
 ---
 
@@ -250,10 +250,10 @@ make linux
 
 Игра собирается из той же кодовой базы C11 / SDL2 с помощью **Emscripten** (проверена сборка на версии `7.0.0`). Для сборки требуются активированное окружение `emsdk`, `make` и Python 3; системные библиотеки SDL2 не нужны.
 
-1. **Установите `emsdk`** один раз (официальная [инструкция Emscripten](https://emscripten.org)):
+1. **Установите `emsdk`** один раз (официальная [инструкция Emscripten](https://emscripten.org/docs/index.html)):
 
 ```bash
-git clone https://github.com "\$HOME/emsdk"
+git clone https://github.com/emscripten-core/emscripten.git "\$HOME/emsdk"
 "\$HOME/emsdk/emsdk" install 7.0.0
 "\$HOME/emsdk/emsdk" activate 7.0.0
 ```
@@ -338,5 +338,5 @@ make web-serve
 - История версий и изменений: [CHANGELOG.md](CHANGELOG.md).
 - Технические проверки и их результаты: [AUDIT.md](AUDIT.md).
 - Прохождение игры: [WALKTHROUGH.md](WALKTHROUGH.md)
-- Справочные материалы: [Страница иры на Wikipedia](https://en.wikipedia.org/wiki/The_Adventures_of_Captain_Comic).
-- Автор: **Максим Живлюк:** [bigvax.ru](http://bigvax.ru), [bigvax@mail.ru](mailto:bigvax@mail.ru).
+- Справочные материалы: [Страница игры на Wikipedia](https://en.wikipedia.org/wiki/The_Adventures_of_Captain_Comic).
+- Автор: **Максим Живлюк**: [bigvax.ru](http://bigvax.ru), [bigvax@mail.ru](mailto:bigvax@mail.ru).
