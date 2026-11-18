@@ -27,5 +27,5 @@
 .markdown th:first-child,.markdown td:first-child{white-space:nowrap}
 .markdown th{background:#1d2d44;color:#fff}
 .markdown tr:nth-child(even){background:#142037}
-.docs footer{margin-top:36px;padding-top:18px;border-top:1px solid #34465e}
+.docs footer{margin-top:36px;padding-top:18px;border-top:1px solid #34465e;display:flex;justify-content:space-between;align-items:center;gap:16px}
 @media(max-width:600px){.markdown{font-size:14px}.markdown h2{font-size:21px}.markdown th,.markdown td{padding:8px}.docs-nav{font-size:13px;gap:10px 16px}}
