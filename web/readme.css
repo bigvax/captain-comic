@@ -21,7 +21,10 @@
 .markdown blockquote{margin:20px 0;padding:1px 18px;border-left:3px solid #72e7e9;color:#bbcada}
 .table-scroll{overflow-x:auto;margin:18px 0}
 .markdown table{width:100%;border-collapse:collapse;font-size:14px}
-.markdown th,.markdown td{padding:10px 12px;border:1px solid #34465e;vertical-align:top;text-align:left}
+.markdown th,.markdown td{padding:10px 12px;border:1px solid #34465e;vertical-align:middle;text-align:left}
+.markdown th[align="center"],.markdown td[align="center"]{text-align:center}
+.markdown th[align="right"],.markdown td[align="right"]{text-align:right}
+.markdown th:first-child,.markdown td:first-child{white-space:nowrap}
 .markdown th{background:#1d2d44;color:#fff}
 .markdown tr:nth-child(even){background:#142037}
 .docs footer{margin-top:36px;padding-top:18px;border-top:1px solid #34465e}
