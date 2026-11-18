@@ -206,27 +206,28 @@ sudo apt install gcc make pkg-config python3 libsdl2-dev libsdl2-ttf-dev libsdl2
 
 ### Цели `Makefile`
 
+
 | Команда | Результат | Описание |
 | :--- | :--- | :--- |
-| `make` *(или `make linux`)* | `captain-comic` | Обычная сборка для текущей Linux-системы |
-| `make all` | 4 варианта | Сборка всех вариантов для Linux и Windows (обычные и со встроенными ресурсами) |
-| `make linux` | `captain-comic` | Динамическая сборка под Linux (системные SDL2-библиотеки и внешний пакет ресурсов) |
-| `make linux-standalone` | `captain-comic-standalone` | ELF со статическими SDL2, SDL2_ttf, SDL2_image и встроенными ресурсами; системные библиотеки остаются динамическими |
-| `make static` | `captain-comic-static` | Совместимое имя для копии `captain-comic-standalone` (повторная компиляция не выполняется) |
-| `make win` | `captain-comic.exe` + `data/*.dll` | Сборка под Windows x64 с отложенной загрузкой DLL из `data/` и вшитой иконкой |
-| `make win-standalone` | `captain-comic-standalone.exe` | Единый автономный `.exe` под Windows x64 со статическим SDL2 и вшитыми ресурсами |
-| `make data/assets.pak` | `data/assets.pak` | Упаковка каталога `assets/` в сжатый ZIP-архив ресурсов (`miniz`) |
-| `make src/assets_data.h` | `src/assets_data.h` | Генерация C-массива `assets_pak` из `data/assets.pak` для standalone-сборок |
-| `make dist` | Архивы в `dist/` | Сборка 4 вариантов и упаковка 5 дистрибутивов (`.tar.gz` для Linux и `.zip` для Windows) с документацией в `` |
-| `make dist-7z` | Архивы `.7z` в `dist/` | Сборка и упаковка дистрибутивов со сжатием Windows-сборок в `.7z` (алиас `make dist WIN_FMT=7z`) |
-| `make web` | `build/web/` | Браузерная сборка WebAssembly через Emscripten |
-| `make web-docs` | Документация в `build/web/` | Копирование локального README, справочных страниц и изображений без запуска Emscripten |
-| `make web-serve` | Локальный сервер | Сборка веб-версии и запуск на `http://127.0.0.1:8080` |
-| `make check` | Отчёт проверок | Сборка `linux` и запуск встроенного набора сценариев (`./captain-comic --self-test`) |
-| `make check-input` | Проверка ввода | Реальный цикл SDL: короткие нажатия, движение, прыжок и стрельба |
-| `make check-ending` | Проверка финала | Реальные события SDL: корона → пересчёт → заставка → ввод имени → таблица → выход |
-| `make check-resources` | Проверка ресурсов | Каталог, внешний PAK, приоритет `--assets` и отклонение повреждённых ресурсов |
-| `make clean` | — | Очистка артефактов сборки, дистрибутивов и генерируемых ресурсов (`keys.cfg` и `scores.dat` сохраняются) |
+| `make`&nbsp;*(или&nbsp;`make`&nbsp;`linux`)* | `captain-comic` | Обычная сборка для текущей Linux-системы |
+| `make`&nbsp;`all` | 4 варианта | Сборка всех вариантов для Linux и Windows (обычные и со встроенными ресурсами) |
+| `make`&nbsp;`linux` | `captain-comic` | Динамическая сборка под Linux (системные SDL2-библиотеки и внешний пакет ресурсов) |
+| `make`&nbsp;`linux&#8209;standalone` | `captain-comic-standalone` | ELF со статическими SDL2, SDL2_ttf, SDL2_image и встроенными ресурсами; системные библиотеки остаются динамическими |
+| `make`&nbsp;`static` | `captain-comic-static` | Совместимое имя для копии `captain-comic-standalone` (повторная компиляция не выполняется) |
+| `make`&nbsp;`win` | `captain-comic.exe` + `data/*.dll` | Сборка под Windows x64 с отложенной загрузкой DLL из `data/` и вшитой иконкой |
+| `make`&nbsp;`win&#8209;standalone` | `captain-comic-standalone.exe` | Единый автономный `.exe` под Windows x64 со статическим SDL2 и вшитыми ресурсами |
+| `make`&nbsp;`data/assets.pak` | `data/assets.pak` | Упаковка каталога `assets/` в сжатый ZIP-архив ресурсов (`miniz`) |
+| `make`&nbsp;`src/assets_data.h` | `src/assets_data.h` | Генерация C-массива `assets_pak` из `data/assets.pak` для standalone-сборок |
+| `make`&nbsp;`dist` | Архивы в `dist/` | Сборка 4 вариантов и упаковка 5 дистрибутивов (`.tar.gz` для Linux и `.zip` для Windows) с документацией в `` |
+| `make`&nbsp;`dist&#8209;7z` | Архивы `.7z` в `dist/` | Сборка и упаковка дистрибутивов со сжатием Windows-сборок в `.7z` (алиас `make dist WIN_FMT=7z`) |
+| `make`&nbsp;`web` | `build/web/` | Браузерная сборка WebAssembly через Emscripten |
+| `make`&nbsp;`web&#8209;docs` | Документация в `build/web/` | Копирование локального README, справочных страниц и изображений без запуска Emscripten |
+| `make`&nbsp;`web&#8209;serve` | Локальный сервер | Сборка веб-версии и запуск на `http://127.0.0.1:8080` |
+| `make`&nbsp;`check` | Отчёт проверок | Сборка `linux` и запуск встроенного набора сценариев (`./captain-comic --self-test`) |
+| `make`&nbsp;`check&#8209;input` | Проверка ввода | Реальный цикл SDL: короткие нажатия, движение, прыжок и стрельба |
+| `make`&nbsp;`check&#8209;ending` | Проверка финала | Реальные события SDL: корона → пересчёт → заставка → ввод имени → таблица → выход |
+| `make`&nbsp;`check&#8209;resources` | Проверка ресурсов | Каталог, внешний PAK, приоритет `--assets` и отклонение повреждённых ресурсов |
+| `make`&nbsp;`clean` | — | Очистка артефактов сборки, дистрибутивов и генерируемых ресурсов (`keys.cfg` и `scores.dat` сохраняются) |
 
 > **Примечание:** обе Linux-цели `linux-standalone` и `static` не являются полностью статическими — им по-прежнему требуются `glibc`, системные звуковые и оконные библиотеки. Цель `static` сохранена только для обратной совместимости.
 
