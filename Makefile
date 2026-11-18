@@ -65,11 +65,15 @@ check-web:
 		'  source ~/emsdk/emsdk_env.sh' \
 		'Затем повторите: make web'; exit 1; \
 	}
+# Генерация копии README для каталога doc/ из эталонного корневого README.md.
+doc/README.md: README.md Makefile
+	@mkdir -p $(@D)
+	sed -e 's|doc/images/|images/|g' -e 's|(doc/\([A-Z]*\.md\))|(\1)|g' $< > $@
 # Как в нативных сборках: предупреждения стороннего miniz отключены отдельно.
 build/web-support/miniz.o: src/miniz.c src/miniz.h Makefile | check-web
 	@mkdir -p $(@D)
 	$(EMCC) $(COMMON_FLAGS) -O2 $(CPPFLAGS) $(CFLAGS) -w -c $< -o $@
-web-docs:
+web-docs: doc/README.md
 	$(PYTHON) tools/pack_web_docs.py $(WEB_OUTPUT)
 web: check-web data/assets.pak build/web-support/miniz.o web-docs
 	@mkdir -p $(WEB_OUTPUT)
@@ -145,7 +149,7 @@ captain-comic.exe: $(OBJECTS_WIN) $(WIN_DELAY_LIBS) | data/assets.pak
 captain-comic-standalone.exe: $(OBJECTS_WIN_STANDALONE)
 	$(CC_WIN) $(RELEASE_LINK) -static-libgcc $(LDFLAGS) $^ $(WIN_LIBRARY_PATH) $(WIN_STATIC_LIBS) $(LDLIBS) -o $@
 # Дистрибутивы всегда используют релизные имена бинарников.
-dist: all
+dist: all doc/README.md
 	$(PYTHON) tools/dist.py --windows-format $(WIN_FMT)
 dist-7z:
 	$(MAKE) dist WIN_FMT=7z
@@ -168,8 +172,3 @@ build/ending-loop-check: tools/ending_loop_check.c build/input-main.o $(filter-o
 # Ресурсы для проверок читаются из assets/, упаковка им не требуется.
 clean:
 	rm -rf build dist
-	rm -f captain-comic captain-comic-debug captain-comic-standalone captain-comic-static captain-comic.exe captain-comic-standalone.exe
-	rm -f data/assets.pak src/assets_data.h data/*.dll
-# Зависимости заголовков, включая sound_data.h и встроенный пакет ресурсов.
--include $(wildcard build/*/*.d build/*.d)
-

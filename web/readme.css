@@ -26,6 +26,7 @@
 .markdown pre code{padding:0;background:none;white-space:pre;overflow-wrap:normal}
 .markdown hr{border:0;border-top:1px solid #34465e;margin:30px 0}
 .markdown blockquote{margin:20px 0;padding:1px 18px;border-left:3px solid #72e7e9;color:#bbcada}
+.markdown blockquote:has(p + p){background:#22334c;border:1px solid #2b4263;border-radius:4px;padding:8px 22px;color:#dce7f5;box-shadow:0 8px 24px rgba(0,0,0,.35)}
 .table-scroll{overflow-x:auto;margin:18px 0}
 .markdown table{width:100%;border-collapse:collapse;font-size:14px}
 .markdown th,.markdown td{padding:10px 12px;border:1px solid #34465e;vertical-align:middle;text-align:left}
