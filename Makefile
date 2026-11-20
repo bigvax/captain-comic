@@ -177,14 +177,8 @@ clean:
 
 
 # Управление версиями (источник правды: src/cc.h) и публикация релиза на GitHub
-bump-patch:
-	@$(PYTHON) -c 'import re; from pathlib import Path; p=Path("src/cc.h"); t=p.read_text(); m=re.search(r"#define VERSION \"(\d+)\.(\d+)\.(\d+)\"", t); v=f"{m.group(1)}.{m.group(2)}.{int(m.group(3))+1}"; p.write_text(re.sub(r"#define VERSION \"[^\"]+\"", f"#define VERSION \"{v}\"", t, 1)); print("Version bumped to", v)'
-
-bump-minor:
-	@$(PYTHON) -c 'import re; from pathlib import Path; p=Path("src/cc.h"); t=p.read_text(); m=re.search(r"#define VERSION \"(\d+)\.(\d+)\.(\d+)\"", t); v=f"{m.group(1)}.{int(m.group(2))+1}.0"; p.write_text(re.sub(r"#define VERSION \"[^\"]+\"", f"#define VERSION \"{v}\"", t, 1)); print("Version bumped to", v)'
-
-bump-major:
-	@$(PYTHON) -c 'import re; from pathlib import Path; p=Path("src/cc.h"); t=p.read_text(); m=re.search(r"#define VERSION \"(\d+)\.(\d+)\.(\d+)\"", t); v=f"{int(m.group(1))+1}.0.0"; p.write_text(re.sub(r"#define VERSION \"[^\"]+\"", f"#define VERSION \"{v}\"", t, 1)); print("Version bumped to", v)'
+bump-patch bump-minor bump-major:
+	@$(PYTHON) -c 'import re, sys; from pathlib import Path; mode=sys.argv[1]; p=Path("src/cc.h"); t=p.read_text(); m=re.search(r"#define VERSION \"(\d+)\.(\d+)\.(\d+)\"", t); maj,mn,pt=map(int,m.groups()); v=f"{maj}.{mn}.{pt+1}" if mode=="bump-patch" else (f"{maj}.{mn+1}.0" if mode=="bump-minor" else f"{maj+1}.0.0"); p.write_text(re.sub(r"#define VERSION \"[^\"]+\"", f"#define VERSION \"{v}\"", t, 1)); cl=Path("doc/CHANGELOG.md"); ct=cl.read_text(); ct=re.sub(r"Текущая версия игры: \*\*[^*]+\*\*\.", f"Текущая версия игры: **{v}**.", ct, 1); ct=ct if f"## {v}" in ct else ct.replace("## ", f"## {v}\n\n- Изменения версии {v}.\n\n## ", 1); cl.write_text(ct); print("Version bumped to", v)' $@
 
 release:
 	@command -v gh >/dev/null 2>&1 || { echo "Не найдена утилита GitHub CLI (gh)"; exit 1; }
@@ -195,7 +189,7 @@ release:
 		$(MAKE) web && \
 		$(PYTHON) -c 'import shutil; shutil.make_archive("dist/captain-comic-web", "zip", "build/web")'; \
 	fi
-	git add src/cc.h
+	git add src/cc.h doc/CHANGELOG.md
 	git diff --cached --quiet || git commit -m "Release v$(VERSION)"
 	git tag -f "v$(VERSION)"
 	git push
