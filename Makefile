@@ -1,3 +1,5 @@
+VERSION := $(strip $(shell sed -n 's/^#define VERSION "\(.*\)"/\1/p' src/cc.h))
+
 .DEFAULT_GOAL := linux
 .DELETE_ON_ERROR:
 # Инструменты. Значения можно переопределять в командной строке make.
@@ -37,9 +39,9 @@ LINUX_FLAGS = -D_POSIX_C_SOURCE=200809L $(LINUX_PKG_CFLAGS)
 # Системные зависимости SDL2 определяются её установленной версией.
 SDL2_SYSTEM_LIBS = $(filter-out -lSDL2,$(shell $(PKG_CONFIG) --static --libs sdl2))
 LINUX_STATIC_LIBS = -Wl,--start-group \
-	deps/linux/build_img/libSDL2_image.a deps/linux/build_ttf/libSDL2_ttf.a \
-	-Wl,-Bstatic -lSDL2 -lfreetype -lpng16 -ljpeg -lbz2 -lbrotlidec -lbrotlicommon -lz \
-	-Wl,--end-group -Wl,-Bdynamic -lharfbuzz $(SDL2_SYSTEM_LIBS)
+	deps/linux/build_sdl/libSDL2.a deps/linux/build_img/libSDL2_image.a deps/linux/build_ttf/libSDL2_ttf.a \
+	-Ldeps/linux/build_sdl -Wl,-Bstatic -lSDL2 -lfreetype -lpng16 -ljpeg -lbz2 -lbrotlidec -lbrotlicommon -lz \
+	-Wl,--end-group -Wl,-Bdynamic -lharfbuzz $(SDL2_SYSTEM_LIBS) -lm
 WIN_FLAGS = -I$(WIN_SYSROOT)/include -I$(WIN_SYSROOT)/include/SDL2 -Dmain=SDL_main
 WIN_LIBRARY_PATH = -L$(WIN_SYSROOT)/lib
 WIN_DELAY_LIBS := $(addprefix build/win/delay_,SDL2.a SDL2_ttf.a SDL2_image.a)
@@ -49,7 +51,7 @@ WIN_SYSTEM_LIBS := -mwindows -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinm
 WIN_STATIC_LIBS = -Wl,-Bstatic -lmingw32 -lSDL2main -lSDL2_image -lSDL2_ttf -lSDL2 \
 	-Wl,-Bdynamic $(WIN_SYSTEM_LIBS)
 .PHONY: all linux linux-standalone static win win-standalone debug dist dist-7z web web-serve web-docs check-web \
-	check check-input check-resources check-ending clean FORCE
+	check check-input check-resources check-ending bump-patch bump-minor bump-major release clean FORCE
 all: linux linux-standalone win win-standalone
 WEB_FLAGS := -O2 -D_POSIX_C_SOURCE=200809L
 WEB_FLAGS += -sUSE_SDL=2 -sUSE_SDL_TTF=2 -sUSE_SDL_IMAGE=2
@@ -136,9 +138,9 @@ captain-comic: $(OBJECTS_LINUX) | data/assets.pak
 	$(CC_LINUX) $(RELEASE_LINK) $(LDFLAGS) $^ $(LINUX_PKG_LIBS) $(LDLIBS) -o $@
 captain-comic-debug: $(OBJECTS_DEBUG) | data/assets.pak
 	$(CC_LINUX) $(DEBUG_LINK) $(LDFLAGS) $^ $(LINUX_PKG_LIBS) $(LDLIBS) -o $@
-deps/linux/build_img/libSDL2_image.a deps/linux/build_ttf/libSDL2_ttf.a &:
+deps/linux/build_sdl/libSDL2.a deps/linux/build_img/libSDL2_image.a deps/linux/build_ttf/libSDL2_ttf.a &:
 	sh deps/linux/deps.sh
-captain-comic-standalone: $(OBJECTS_STANDALONE) deps/linux/build_img/libSDL2_image.a deps/linux/build_ttf/libSDL2_ttf.a
+captain-comic-standalone: $(OBJECTS_STANDALONE) deps/linux/build_sdl/libSDL2.a deps/linux/build_img/libSDL2_image.a deps/linux/build_ttf/libSDL2_ttf.a
 	$(CC_LINUX) $(RELEASE_LINK) -static-libgcc $(LDFLAGS) $(OBJECTS_STANDALONE) $(LINUX_STATIC_LIBS) $(LDLIBS) -o $@
 # Совместимое имя: это копия standalone, а не полностью статический ELF.
 captain-comic-static: captain-comic-standalone
@@ -168,7 +170,41 @@ build/input-main.o: src/main.c src/cc.h Makefile
 build/input-loop-check: tools/input_loop_check.c build/input-main.o $(filter-out build/linux/main.o,$(OBJECTS_LINUX))
 	$(CC_LINUX) $(WARNINGS) $(LINUX_FLAGS) $(CPPFLAGS) $(CFLAGS) -Isrc $^ $(LDFLAGS) $(LINUX_PKG_LIBS) $(LDLIBS) -Wl,--wrap=game_key -Wl,--wrap=game_update -Wl,--wrap=game_draw -o $@
 build/ending-loop-check: tools/ending_loop_check.c build/input-main.o $(filter-out build/linux/main.o,$(OBJECTS_LINUX))
-	$(CC_LINUX) $(WARNINGS) $(LINUX_FLAGS) $(CPPFLAGS) $(CFLAGS) -Isrc $^ $(LDFLAGS) $(LINUX_PKG_LIBS) $(LDLIBS) -Wl,--wrap=game_draw -Wl,--wrap=game_key -o $@
+	$(CC_LINUX) $(WARNINGS) $(LINUX_FLAGS) $(CPPFLAGS) $(CFLAGS) -Isrc $^ $(LDFLAGS) -lSDL2_ttf -lSDL2_image deps/linux/build_sdl/libSDL2.a $(SDL2_SYSTEM_LIBS) -lm $(LDLIBS) -Wl,--wrap=game_draw -Wl,--wrap=game_key -o $@
 # Ресурсы для проверок читаются из assets/, упаковка им не требуется.
 clean:
 	rm -rf build dist
+
+
+# Управление версиями (источник правды: src/cc.h) и публикация релиза на GitHub
+bump-patch:
+	@$(PYTHON) -c 'import re; from pathlib import Path; p=Path("src/cc.h"); t=p.read_text(); m=re.search(r"#define VERSION \"(\d+)\.(\d+)\.(\d+)\"", t); v=f"{m.group(1)}.{m.group(2)}.{int(m.group(3))+1}"; p.write_text(re.sub(r"#define VERSION \"[^\"]+\"", f"#define VERSION \"{v}\"", t, 1)); print("Version bumped to", v)'
+
+bump-minor:
+	@$(PYTHON) -c 'import re; from pathlib import Path; p=Path("src/cc.h"); t=p.read_text(); m=re.search(r"#define VERSION \"(\d+)\.(\d+)\.(\d+)\"", t); v=f"{m.group(1)}.{int(m.group(2))+1}.0"; p.write_text(re.sub(r"#define VERSION \"[^\"]+\"", f"#define VERSION \"{v}\"", t, 1)); print("Version bumped to", v)'
+
+bump-major:
+	@$(PYTHON) -c 'import re; from pathlib import Path; p=Path("src/cc.h"); t=p.read_text(); m=re.search(r"#define VERSION \"(\d+)\.(\d+)\.(\d+)\"", t); v=f"{int(m.group(1))+1}.0.0"; p.write_text(re.sub(r"#define VERSION \"[^\"]+\"", f"#define VERSION \"{v}\"", t, 1)); print("Version bumped to", v)'
+
+release:
+	@command -v gh >/dev/null 2>&1 || { echo "Не найдена утилита GitHub CLI (gh)"; exit 1; }
+	$(MAKE) clean
+	$(MAKE) check check-input check-ending check-resources
+	$(MAKE) -j$$(nproc) dist
+	@if command -v "$(EMCC)" >/dev/null 2>&1; then \
+		$(MAKE) web && \
+		$(PYTHON) -c 'import shutil; shutil.make_archive("dist/captain-comic-web", "zip", "build/web")'; \
+	fi
+	git add src/cc.h
+	git diff --cached --quiet || git commit -m "Release v$(VERSION)"
+	git tag -f "v$(VERSION)"
+	git push
+	git push -f origin "v$(VERSION)"
+	@if gh release view "v$(VERSION)" >/dev/null 2>&1; then \
+		gh release upload "v$(VERSION)" dist/* --clobber; \
+	else \
+		sed "s/__VERSION__/$(VERSION)/g" packaging/RELEASE_NOTES.md > build/RELEASE_NOTES.md && \
+		gh release create "v$(VERSION)" dist/* \
+			--title "Captain Comic v$(VERSION)" \
+			--notes-file build/RELEASE_NOTES.md; \
+	fi

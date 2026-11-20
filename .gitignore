@@ -18,4 +18,6 @@
 __pycache__/
 *.py[cod]
 *.bak
+m.sh
 *~
+deps/linux/build_sdl/

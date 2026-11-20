@@ -21,6 +21,7 @@ static void tap(SDL_Scancode key) {
 }
 void __wrap_game_draw(Game *g) {
 	if (phase == 0) {
+		SDL_StartTextInput();
 		g->r->scores = (ScoreTable){0};
 		g->r->score_path[0] = 0;
 		if (mode >= 6)
