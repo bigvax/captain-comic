@@ -4,7 +4,7 @@
 #include <SDL_ttf.h>
 #include <stdbool.h>
 #include <stdint.h>
-#define VERSION "0.5.63"
+#define VERSION "0.5.64"
 #define WIDTH 320
 #define HUD_HEIGHT 40
 #define STATUS_HEIGHT 14
