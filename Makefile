@@ -189,7 +189,7 @@ release:
 		$(MAKE) web && \
 		$(PYTHON) -c 'import shutil; shutil.make_archive("dist/captain-comic-web", "zip", "build/web")'; \
 	fi
-	git add src/cc.h doc/CHANGELOG.md
+	git add src/cc.h doc/CHANGELOG.md doc/AUDIT.md
 	git diff --cached --quiet || git commit -m "Release v$(VERSION)"
 	git tag -f "v$(VERSION)"
 	git push
