@@ -15,6 +15,7 @@
 !/deps/linux/build_img/libSDL2_image.a
 /deps/linux/build_ttf/*
 !/deps/linux/build_ttf/libSDL2_ttf.a
+/tools/sprites
 __pycache__/
 *.py[cod]
 *.bak
