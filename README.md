@@ -1,4 +1,4 @@
-<p align="center"><img src="doc/images/comic.png" alt="Captain Comic" width="128" height="128"></p>
+<p align="center"><img src="doc/images/comic256.png" alt="Captain Comic" width="256" height="256"></p>
 <h1 align="center">Adventures of Captain Comic</h1>
 <h3 align="center">(Linux / Windows / Web)</h3>
 <br>
